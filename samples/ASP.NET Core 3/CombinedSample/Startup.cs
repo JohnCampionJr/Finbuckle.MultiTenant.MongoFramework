@@ -67,6 +67,8 @@ namespace DataIsolationSample
         {
             var scopeServices = sp.CreateScope().ServiceProvider;
             var store = scopeServices.GetRequiredService<IMultiTenantStore<MongoTenantInfo>>();
+            
+            if (store.GetAllAsync().Result.Any()) return;
 
             store.TryAddAsync(new MongoTenantInfo{Id = "tenant-finbuckle-d043favoiaw", Identifier = "finbuckle", Name = "Finbuckle"}).Wait();
             store.TryAddAsync(new MongoTenantInfo{Id = "tenant-initech-341ojadsfa", Identifier = "initech", Name = "Initech LLC", ConnectionString = "mongodb://localhost/samples-tenant-initech"}).Wait();
