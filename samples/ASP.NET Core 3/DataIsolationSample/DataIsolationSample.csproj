@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Finbuckle.MultiTenant.AspNetCore" Version="6.0.0" />
+    <PackageReference Include="MongoFramework" Version="0.23.1" />
+    <PackageReference Include="MongoFramework.AspNetCore.Identity" Version="0.1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\Finbuckle.MultiTenant.MongoFramework\Finbuckle.MultiTenant.MongoFramework.csproj" />
+  </ItemGroup>
+</Project>
