@@ -1,6 +1,6 @@
-[![Actions Status](https://github.com/JohnCampionJr/Finbuckle.MultiTenant.MongoFramework/workflows/.NET%20Core%20Coverage%20(Ubuntu)/badge.svg)](https://github.com/JohnCampionJr/MiniScaffoldCSharp/actions)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f2cec74cb05346b88e9bb54488198c54)](https://www.codacy.com/gh/JohnCampionJr/MiniScaffoldCSharp/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JohnCampionJr/MiniScaffoldCSharp&amp;utm_campaign=Badge_Grade)
-[![codecov](https://codecov.io/gh/JohnCampionJr/Finbuckle.MultiTenant.MongoFramework/branch/main/graph/badge.svg?token=OIGAKLPE23)](undefined)
+[![Actions Status](https://github.com/JohnCampionJr/Finbuckle.MultiTenant.MongoFramework/workflows/.NET%20Core%20Coverage%20(Ubuntu)/badge.svg)](https://github.com/JohnCampionJr/Finbuckle.MultiTenant.MongoFramework/actions)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/5956d5a253ee4e63bf60b132b7341f71)](https://www.codacy.com/gh/JohnCampionJr/Finbuckle.MultiTenant.MongoFramework/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JohnCampionJr/Finbuckle.MultiTenant.MongoFramework&amp;utm_campaign=Badge_Grade)
+[![codecov](https://codecov.io/gh/JohnCampionJr/Finbuckle.MultiTenant.MongoFramework/branch/main/graph/badge.svg?token=45JGOD4P2M)](undefined)
 
 # Finbuckle.MultiTenant.MongoFramework
 This is an integration of [MongoFramework](https://github.com/TurnerSoftware/MongoFramework) and [Finbuckle.MultiTenant](https://github.com/Finbuckle/Finbuckle.MultiTenant).
