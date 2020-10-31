@@ -1,7 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.1</TargetFramework>       
+        <TargetFramework>netcoreapp2.1</TargetFramework>
+        <PackageTags>$(PackageBaseTags)</PackageTags>
+        <AssemblyName>Finbuckle.MultiTenant.MongoFramework</AssemblyName>
+        <Title>Finbuckle.MultiTenant.MongoFramework</Title>
+        <Description>Finbuckle.MultiTenant integration with MongoFramework providing tenant store and data isolation</Description>
+        <PackageTags>$(PackageBaseTags)</PackageTags>
+        <Authors>John Campion Jr</Authors>
     </PropertyGroup>
 
     <ItemGroup>
