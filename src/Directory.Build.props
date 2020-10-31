@@ -9,7 +9,7 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/JohnCampionJr/Finbuckle.MultiTenant.MongoFramework</PackageProjectUrl>
-    <PackageBaseTags>template;scaffold</PackageBaseTags>
+    <PackageBaseTags>mongodb;multitentat;mongoframework;finbuckle</PackageBaseTags>
     
     <RepositoryUrl>https://github.com/JohnCampionJr/Finbuckle.MultiTenant.MongoFramework.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
