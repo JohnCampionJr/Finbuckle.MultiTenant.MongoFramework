@@ -13,7 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// Adds a MongoFramework based multitenant store to the application. 
         /// </summary>
         /// <returns>The same MultiTenantBuilder passed into the method.</returns>
-        public static FinbuckleMultiTenantBuilder<TTenantInfo> WithMongoDbStore<TTenantInfo>(this FinbuckleMultiTenantBuilder<TTenantInfo> builder, 
+        public static FinbuckleMultiTenantBuilder<TTenantInfo> WithMongoDbStore<TTenantInfo>(this FinbuckleMultiTenantBuilder<TTenantInfo> builder,
             string defaultConnectionString)
             where TTenantInfo : class, ITenantInfo, new()
         {

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoFramework;
@@ -17,7 +17,7 @@ namespace Finbuckle.MultiTenant.Stores
         {
             if (context is IMongoDbTenantContext)
             {
-                throw new ArgumentException("Context provided to a MongoTenantStore must not be IMongoDbTenantContext",nameof(context));
+                throw new ArgumentException("Context provided to a MongoTenantStore must not be IMongoDbTenantContext", nameof(context));
             }
             _context = context;
             _defaultConnectionString = defaultConnectionString;
@@ -58,7 +58,7 @@ namespace Finbuckle.MultiTenant.Stores
             {
                 return false;
             }
-            
+
             _context.Set<TTenantInfo>().Remove(existing);
             await _context.SaveChangesAsync();
             return true;
@@ -70,7 +70,7 @@ namespace Finbuckle.MultiTenant.Stores
                 .SingleOrDefaultAsync(ti => ti.Identifier == identifier);
 
             AddDefaultConnectionString(existing);
-            
+
             return existing;
         }
 
@@ -78,9 +78,9 @@ namespace Finbuckle.MultiTenant.Stores
         {
             if (existing is null)
             {
-                return; 
+                return;
             }
-            
+
             if (existing.ConnectionString is null && !(_defaultConnectionString is null))
             {
                 existing.ConnectionString = _defaultConnectionString;

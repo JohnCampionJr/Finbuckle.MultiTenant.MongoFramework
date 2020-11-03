@@ -18,7 +18,7 @@ namespace MongoFramework
     public class MongoPerTenantConnection : MongoDbConnection, IMongoPerTenantConnection
     {
         public ITenantInfo TenantInfo { get; }
-        
+
         public MongoPerTenantConnection(ITenantInfo ti)
         {
             Check.NotNull(ti, nameof(ti));
