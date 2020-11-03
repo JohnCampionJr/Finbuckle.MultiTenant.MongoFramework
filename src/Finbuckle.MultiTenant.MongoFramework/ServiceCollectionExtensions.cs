@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Extensions.Options;
 using MongoFramework;
-using MongoFramework.Infrastructure.Diagnostics;
 using MongoFramework.Utilities;
 
 // ReSharper disable once CheckNamespace
@@ -62,20 +58,20 @@ namespace Microsoft.Extensions.DependencyInjection
             return AddMongoPerTenantConnection<IMongoPerTenantConnection, MongoPerTenantConnection>(serviceCollection, defaultConnectionString, contextLifetime);
         }
 
-        public static IServiceCollection AddMongoPerTenantConnection<TContext>(
+        public static IServiceCollection AddMongoPerTenantConnection<TConnection>(
                 this IServiceCollection serviceCollection,
                 string defaultConnectionString,
                 ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
-                where TContext : IMongoPerTenantConnection
+                where TConnection : IMongoPerTenantConnection
         {
-            return AddMongoPerTenantConnection<IMongoPerTenantConnection, TContext>(serviceCollection, defaultConnectionString, contextLifetime);
+            return AddMongoPerTenantConnection<IMongoPerTenantConnection, TConnection>(serviceCollection, defaultConnectionString, contextLifetime);
         }
 
-        public static IServiceCollection AddMongoPerTenantConnection<TContextService, TContextImplementation>(
+        public static IServiceCollection AddMongoPerTenantConnection<TConnectionService, TConnectionImplementation>(
             this IServiceCollection serviceCollection,
             string defaultConnectionString,
             ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
-            where TContextImplementation : IMongoPerTenantConnection, TContextService
+            where TConnectionImplementation : IMongoPerTenantConnection, TConnectionService
         {
 
             Check.NotNull(serviceCollection, nameof(serviceCollection));
@@ -88,20 +84,10 @@ namespace Microsoft.Extensions.DependencyInjection
                 });
             }
 
-            serviceCollection.Add(new ServiceDescriptor(typeof(TContextService), typeof(TContextImplementation), contextLifetime));
+            serviceCollection.Add(new ServiceDescriptor(typeof(TConnectionService), typeof(TConnectionImplementation), contextLifetime));
 
             return serviceCollection;
         }
-    }
-}
-
-// ReSharper disable once CheckNamespace
-namespace MongoFramework
-{
-    public class MongoPerTenantConnectionOptions
-    {
-        public string DefaultConnectionString { get; set; }
-        public IDiagnosticListener DiagnosticListener { get; set; }
     }
 }
 

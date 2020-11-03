@@ -81,7 +81,7 @@ namespace Finbuckle.MultiTenant.Tests
             store.TryRemoveAsync("initech").Result.ShouldBeTrue();
             store.TryGetByIdentifierAsync("initech").Result.ShouldBeNull();
         }
-        
+
         [Fact]
         public void ReturnNullWhenRemovingIfTenantInfoNotFound()
         {

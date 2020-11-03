@@ -15,10 +15,10 @@ namespace Finbuckle.MultiTenant.Tests
             };
             var conn = new MongoPerTenantConnection(ti);
             var context = new MongoPerTenantContext(conn, ti);
-            
+
             context.Connection.Client.Settings.Server.Host.ShouldBe("localhost");
             context.TenantInfo.ShouldBeSameAs(ti);
         }
-        
+
     }
 }

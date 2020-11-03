@@ -13,7 +13,7 @@ namespace Finbuckle.MultiTenant.Tests
     {
 
         [Fact]
-        public void RegisterStoreWithoutDefaultConnString()
+        public void RegisterStore()
         {
             var services = new ServiceCollection();
             services.AddTransient<IMongoTenantStoreConnection>(s => new MongoTenantStoreConnection("mongodb://localhost"));
@@ -31,20 +31,22 @@ namespace Finbuckle.MultiTenant.Tests
         }
 
         [Fact]
-        public void RegisterStoreWithDefaultConnString()
+        public void RegisterStoreWithConnString()
         {
             var services = new ServiceCollection();
-            services.AddTransient<IMongoTenantStoreConnection>(s => new MongoTenantStoreConnection("mongodb://localhost"));
-            services.AddTransient<IMongoTenantStoreContext, MongoTenantStoreContext>();
 
             var builder = new FinbuckleMultiTenantBuilder<MongoTenantInfo>(services);
-            builder.WithMongoFrameworkStore();
+            builder.WithMongoFrameworkStore("mongodb://localhost");
 
             var provider = services.BuildServiceProvider();
             using (var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var db = scoped.ServiceProvider.GetRequiredService<IMultiTenantStore<MongoTenantInfo>>();
                 db.ShouldBeOfType<MongoTenantStore<MongoTenantInfo>>();
+                var conn = scoped.ServiceProvider.GetRequiredService<IMongoTenantStoreConnection>();
+                conn.ShouldBeOfType<MongoTenantStoreConnection>();
+                var context = scoped.ServiceProvider.GetRequiredService<IMongoTenantStoreContext>();
+                context.ShouldBeOfType<MongoTenantStoreContext>();
             }
         }
 
