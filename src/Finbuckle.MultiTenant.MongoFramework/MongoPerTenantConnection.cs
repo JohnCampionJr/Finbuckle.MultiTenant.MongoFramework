@@ -1,5 +1,6 @@
 ﻿using System;
 using Finbuckle.MultiTenant;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MongoFramework.Infrastructure;
 using MongoFramework.Infrastructure.Diagnostics;
@@ -15,17 +16,22 @@ namespace MongoFramework
     {
         ITenantInfo TenantInfo { get; }
     }
+
     public class MongoPerTenantConnection : MongoDbConnection, IMongoPerTenantConnection
     {
         public ITenantInfo TenantInfo { get; }
 
-        public MongoPerTenantConnection(ITenantInfo ti)
+        public MongoPerTenantConnection(ITenantInfo ti, IOptions<MongoPerTenantConnectionOptions> options = null)
         {
             Check.NotNull(ti, nameof(ti));
+            TenantInfo = ti;
             if (!string.IsNullOrEmpty(ti.ConnectionString) && ti.ConnectionString.ToLower().StartsWith("mongodb://"))
             {
                 Url = new MongoUrl(ti.ConnectionString);
-                TenantInfo = ti;
+            }
+            else if (!string.IsNullOrEmpty(options?.Value?.DefaultConnectionString) && options.Value.DefaultConnectionString.ToLower().StartsWith("mongodb://"))
+            {
+                Url = new MongoUrl(options.Value.DefaultConnectionString);
             }
             else
             {

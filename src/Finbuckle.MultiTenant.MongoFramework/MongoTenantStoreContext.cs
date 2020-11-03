@@ -1,16 +1,11 @@
-using System;
-using MongoFramework;
+﻿// These are essentially empty classes to allow a more narrow dependency injection that just taking any available Context / Connection in the tenant store
 
-namespace Finbuckle.MultiTenant.MongoDb
+namespace MongoFramework
 {
+    public interface IMongoTenantStoreContext : IMongoDbContext { }
 
-    public class MongoTenantStoreContext : MongoDbContext, IMongoTenantStoreContext<MongoTenantInfo>
+    public class MongoTenantStoreContext : MongoDbContext, IMongoTenantStoreContext
     {
-        public MongoTenantStoreContext(IMongoDbConnection connection) : base(connection)
-        {
-
-        }
-
-        public MongoDbSet<MongoTenantInfo> Tenants { get; set; }
+        public MongoTenantStoreContext(IMongoTenantStoreConnection connection) : base(connection) { }
     }
 }

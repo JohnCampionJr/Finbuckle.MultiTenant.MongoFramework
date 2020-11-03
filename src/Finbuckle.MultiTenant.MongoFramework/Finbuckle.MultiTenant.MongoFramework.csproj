@@ -17,7 +17,6 @@
 
     <ItemGroup>
       <Compile Remove="IMongoTenantStoreContext.cs" />
-      <Compile Remove="MongoTenantStoreContext.cs" />
     </ItemGroup>
 
 </Project>

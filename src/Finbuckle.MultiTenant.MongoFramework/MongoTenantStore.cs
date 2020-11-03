@@ -10,17 +10,15 @@ namespace Finbuckle.MultiTenant.Stores
     public class MongoTenantStore<TTenantInfo> : IMultiTenantStore<TTenantInfo>
         where TTenantInfo : class, ITenantInfo, new()
     {
-        private readonly IMongoDbContext _context;
-        private readonly string _defaultConnectionString;
+        private readonly IMongoTenantStoreContext _context;
 
-        public MongoTenantStore(IMongoDbContext context, string defaultConnectionString = null)
+        public MongoTenantStore(IMongoTenantStoreContext context)
         {
             if (context is IMongoDbTenantContext)
             {
                 throw new ArgumentException("Context provided to a MongoTenantStore must not be IMongoDbTenantContext", nameof(context));
             }
             _context = context;
-            _defaultConnectionString = defaultConnectionString;
         }
 
         public async Task<bool> TryAddAsync(TTenantInfo tenantInfo)
@@ -69,30 +67,13 @@ namespace Finbuckle.MultiTenant.Stores
             var existing = await _context.Set<TTenantInfo>()
                 .SingleOrDefaultAsync(ti => ti.Identifier == identifier);
 
-            AddDefaultConnectionString(existing);
-
             return existing;
-        }
-
-        private void AddDefaultConnectionString(TTenantInfo existing)
-        {
-            if (existing is null)
-            {
-                return;
-            }
-
-            if (existing.ConnectionString is null && !(_defaultConnectionString is null))
-            {
-                existing.ConnectionString = _defaultConnectionString;
-            }
         }
 
         public async Task<TTenantInfo> TryGetAsync(string id)
         {
             var existing = await _context.Set<TTenantInfo>()
                 .SingleOrDefaultAsync(ti => ti.Id == id);
-
-            AddDefaultConnectionString(existing);
 
             return existing;
         }

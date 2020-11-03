@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Finbuckle.MultiTenant.Stores;
 using MongoFramework;
@@ -11,10 +11,10 @@ namespace Finbuckle.MultiTenant.Tests
     {
         private IMultiTenantStore<MongoTenantInfo> CreateTestStore()
         {
-            var conn = MongoDbConnection.FromConnectionString("mongodb://localhost/TenantTests");
+            var conn = new MongoTenantStoreConnection("mongodb://localhost/TenantTests");
             conn.GetDatabase().DropCollection("Tenants");
-            var context = new MongoDbContext(conn);
-            var store = new MongoTenantStore<MongoTenantInfo>(context, "default_conn_string");
+            var context = new MongoTenantStoreContext(conn);
+            var store = new MongoTenantStore<MongoTenantInfo>(context);
             return PopulateTestStore(store);
         }
 
@@ -36,13 +36,6 @@ namespace Finbuckle.MultiTenant.Tests
             return store;
         }
 
-        [Fact]
-        public void HaveDefaultConnectionStringInTenant()
-        {
-            var store = CreateTestStore();
-            store.TryGetAsync("default-id").Result.ConnectionString.ShouldBe("default_conn_string");
-        }
-        
         [Fact]
         public void GetTenantInfoFromStoreById()
         {
@@ -109,16 +102,16 @@ namespace Finbuckle.MultiTenant.Tests
         {
             var store = CreateTestStore();
             var fakeTenant = new MongoTenantInfo {Id = "fake-id", Identifier = "fake"};
-            
+
             store.TryUpdateAsync(fakeTenant).Result.ShouldBeFalse();
         }
 
         [Fact]
         public void NotAllowTenantContext()
         {
-            var conn = MongoDbConnection.FromConnectionString("mongodb://localhost/TenantTests");
+            var conn = new MongoTenantStoreConnection("mongodb://localhost/TenantTests");
             conn.GetDatabase().DropCollection("Tenants");
-            var context = new MongoDbTenantContext(conn, "id");
+            var context = new MongoTestTenantContext(conn, "test");
             Should.Throw<ArgumentException>(() =>
             {
                 _ = new MongoTenantStore<MongoTenantInfo>(context);
@@ -131,6 +124,11 @@ namespace Finbuckle.MultiTenant.Tests
             var store = CreateTestStore();
             var list = store.GetAllAsync().Result;
             list.Count().ShouldBe(3);
+        }
+
+        private class MongoTestTenantContext : MongoDbTenantContext, IMongoTenantStoreContext
+        {
+            public MongoTestTenantContext(IMongoTenantStoreConnection conn, string tenantId) : base(conn, tenantId) { }
         }
     }
 }

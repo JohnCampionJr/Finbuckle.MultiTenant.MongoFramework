@@ -9,22 +9,18 @@ using Xunit;
 
 namespace Finbuckle.MultiTenant.Tests
 {
-	public class MultiTenantBuildExtensionsShould
-	{
+    public class MultiTenantBuildExtensionsShould
+    {
 
         [Fact]
         public void RegisterStoreWithoutDefaultConnString()
         {
             var services = new ServiceCollection();
-            services.AddTransient<IMongoDbConnection>(s =>
-            {
-                var connection = MongoDbConnection.FromConnectionString("mongodb://localhost");
-                return connection;
-            });
-            services.AddTransient<IMongoDbContext, MongoDbContext>();
-            
+            services.AddTransient<IMongoTenantStoreConnection>(s => new MongoTenantStoreConnection("mongodb://localhost"));
+            services.AddTransient<IMongoTenantStoreContext, MongoTenantStoreContext>();
+
             var builder = new FinbuckleMultiTenantBuilder<MongoTenantInfo>(services);
-            builder.WithMongoDbStore();
+            builder.WithMongoFrameworkStore();
 
             var provider = services.BuildServiceProvider();
             using (var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope())
@@ -33,20 +29,16 @@ namespace Finbuckle.MultiTenant.Tests
                 db.ShouldBeOfType<MongoTenantStore<MongoTenantInfo>>();
             }
         }
-        
+
         [Fact]
         public void RegisterStoreWithDefaultConnString()
         {
             var services = new ServiceCollection();
-            services.AddTransient<IMongoDbConnection>(s =>
-            {
-                var connection = MongoDbConnection.FromConnectionString("mongodb://localhost");
-                return connection;
-            });
-            services.AddTransient<IMongoDbContext, MongoDbContext>();
-            
+            services.AddTransient<IMongoTenantStoreConnection>(s => new MongoTenantStoreConnection("mongodb://localhost"));
+            services.AddTransient<IMongoTenantStoreContext, MongoTenantStoreContext>();
+
             var builder = new FinbuckleMultiTenantBuilder<MongoTenantInfo>(services);
-            builder.WithMongoDbStore("mongodb://localhost");
+            builder.WithMongoFrameworkStore();
 
             var provider = services.BuildServiceProvider();
             using (var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope())

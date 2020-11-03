@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Finbuckle.MultiTenant.Stores;
 using MongoFramework;
 using Shouldly;
@@ -10,10 +10,10 @@ namespace Finbuckle.MultiTenant.Tests
     {
         private IMultiTenantStore<MongoTenantInfo> CreateTestStore()
         {
-            var conn = MongoDbConnection.FromConnectionString("mongodb://localhost/TenantTests");
+            var conn = new MongoTenantStoreConnection("mongodb://localhost/TenantTests");
             conn.GetDatabase().DropCollection("Tenants");
-            var context = new MongoDbContext(conn);
-            var store = new MongoTenantStore<MongoTenantInfo>(context, "default_conn_string");
+            var context = new MongoTenantStoreContext(conn);
+            var store = new MongoTenantStore<MongoTenantInfo>(context);
             return PopulateTestStore(store);
         }
 
@@ -34,7 +34,7 @@ namespace Finbuckle.MultiTenant.Tests
 
             return store;
         }
-        
+
         [Fact]
         public void SetsUrlWithTenantConnectionString()
         {
@@ -44,11 +44,28 @@ namespace Finbuckle.MultiTenant.Tests
             };
 
             var conn = new MongoPerTenantConnection(ti);
-            
+
             conn.Url.Url.ShouldBe("mongodb://localhost");
             conn.TenantInfo.ShouldBeSameAs(ti);
         }
 
+        [Fact]
+        public void SetsUrlWithDefaultConnectionString()
+        {
+            var ti = new MongoTenantInfo
+            {
+                Id = "initech-id",
+                Identifier = "initech",
+                Name = "Initech",
+            };
+
+            var options = Microsoft.Extensions.Options.Options.Create(new MongoPerTenantConnectionOptions() { DefaultConnectionString = "mongodb://localhost" });
+
+            var conn = new MongoPerTenantConnection(ti, options);
+
+            conn.Url.Url.ShouldBe("mongodb://localhost");
+            conn.TenantInfo.ShouldBeSameAs(ti);
+        }
 
         [Fact]
         public void ThrowWithNoTenant()
@@ -58,7 +75,7 @@ namespace Finbuckle.MultiTenant.Tests
                 _ = new MongoPerTenantConnection(null);
             });
         }
-        
+
         [Fact]
         public void ThrowWithNoConnectionString()
         {
