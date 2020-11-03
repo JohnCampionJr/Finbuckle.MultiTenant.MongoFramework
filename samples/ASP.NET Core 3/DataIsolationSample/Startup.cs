@@ -28,9 +28,9 @@ namespace DataIsolationSample
                 .WithConfigurationStore()
                 .WithRouteStrategy()
                 .WithRedirectStrategy("/notenant");
-            
+
             services.AddScoped<IMongoPerTenantConnection, MongoPerTenantConnection>();
-            
+
             // Register the db context, but do not specify a provider/connection string since
             // these vary by tenant.
             services.AddMongoDbContext<ToDoDbContext>();

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using Finbuckle.MultiTenant;
 using Microsoft.AspNetCore.Builder;
@@ -22,12 +22,8 @@ namespace MongoTenantStoreSample
         {
             services.AddControllersWithViews();
 
-            var connectionString = Configuration.GetConnectionString("TenantStoreConnection");
-
-            services.AddScoped<IMongoDbConnection>(sp => MongoDbConnection.FromConnectionString(connectionString));
-            services.AddMongoDbContext<IMongoDbContext, MongoDbContext>();
             services.AddMultiTenant<MongoTenantInfo>()
-                    .WithMongoDbStore()
+                    .WithMongoFrameworkStore(Configuration.GetConnectionString("TenantStoreConnection"))
                     .WithRouteStrategy();
         }
 

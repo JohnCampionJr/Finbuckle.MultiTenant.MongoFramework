@@ -24,18 +24,13 @@ namespace DataIsolationSample
         {
             services.AddControllersWithViews();
 
-            var connectionString = Configuration.GetConnectionString("TenantStoreConnection");
-            var defaultPerTenantConnection = Configuration.GetConnectionString("DefaultPerTenantConnection");
-            
-            services.AddScoped<IMongoDbConnection>(sp => MongoDbConnection.FromConnectionString(connectionString));
-            services.AddMongoDbContext<IMongoDbContext, MongoDbContext>();
             services.AddMultiTenant<MongoTenantInfo>()
-                .WithMongoDbStore(defaultPerTenantConnection)
+                .WithMongoFrameworkStore(Configuration.GetConnectionString("TenantStoreConnection"))
                 .WithRouteStrategy()
                 .WithRedirectStrategy("/notenant");
-            
-            services.AddScoped<IMongoPerTenantConnection, MongoPerTenantConnection>();
-            
+
+            services.AddMongoPerTenantConnection(Configuration.GetConnectionString("DefaultPerTenantConnection"));
+
             // Register the db context, but do not specify a provider/connection string since
             // these vary by tenant.
             services.AddMongoDbContext<ToDoDbContext>();

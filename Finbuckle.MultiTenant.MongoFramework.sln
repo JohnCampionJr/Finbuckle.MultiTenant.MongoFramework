@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{96A1AC98
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "global", "global", "{A8F5FC10-E567-49AB-90DD-77BCAAC16987}"
 	ProjectSection(SolutionItems) = preProject
+		.codacy.yml = .codacy.yml
 		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
@@ -22,22 +23,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "global", "global", "{A8F5FC
 		CodeCoverage.runsettings = CodeCoverage.runsettings
 		LICENSE = LICENSE
 		README.md = README.md
-		.codacy.yml = .codacy.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finbuckle.MultiTenant.MongoFramework", "src\Finbuckle.MultiTenant.MongoFramework\Finbuckle.MultiTenant.MongoFramework.csproj", "{61D2D02B-45FF-46D4-9D12-90B726FA31B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finbuckle.MultiTenant.MongoFramework", "src\Finbuckle.MultiTenant.MongoFramework\Finbuckle.MultiTenant.MongoFramework.csproj", "{61D2D02B-45FF-46D4-9D12-90B726FA31B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finbuckle.MultiTenant.MongoFramework.Tests", "tests\Finbuckle.MultiTenant.MongoFramework.Tests\Finbuckle.MultiTenant.MongoFramework.Tests.csproj", "{632923FC-5E87-4C2C-B817-B48D5E82EADB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Finbuckle.MultiTenant.MongoFramework.Tests", "tests\Finbuckle.MultiTenant.MongoFramework.Tests\Finbuckle.MultiTenant.MongoFramework.Tests.csproj", "{632923FC-5E87-4C2C-B817-B48D5E82EADB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{95E58738-E5A6-447D-B5CA-EE2ED34F49D6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ASP.NET Core 3", "ASP.NET Core 3", "{87CE6454-DFE1-4E5E-BA7D-6E981A0256DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataIsolationSample", "samples\ASP.NET Core 3\DataIsolationSample\DataIsolationSample.csproj", "{0CDECB5B-C887-4665-B95C-E0108A3D1F0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataIsolationSample", "samples\ASP.NET Core 3\DataIsolationSample\DataIsolationSample.csproj", "{0CDECB5B-C887-4665-B95C-E0108A3D1F0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoTenantStoreSample", "samples\ASP.NET Core 3\MongoTenantStoreSample\MongoTenantStoreSample.csproj", "{4590C75F-B251-4A18-8E85-6DC092171222}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoTenantStoreSample", "samples\ASP.NET Core 3\MongoTenantStoreSample\MongoTenantStoreSample.csproj", "{4590C75F-B251-4A18-8E85-6DC092171222}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CombinedSample", "samples\ASP.NET Core 3\CombinedSample\CombinedSample.csproj", "{9312D426-4333-42A1-9404-6FD191A2B36B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CombinedSample", "samples\ASP.NET Core 3\CombinedSample\CombinedSample.csproj", "{9312D426-4333-42A1-9404-6FD191A2B36B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationSample", "samples\ASP.NET Core 3\AuthenticationSample\AuthenticationSample.csproj", "{4BAF8BC1-A1C7-44CC-A5C8-F9943A87901D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{9312D426-4333-42A1-9404-6FD191A2B36B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9312D426-4333-42A1-9404-6FD191A2B36B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9312D426-4333-42A1-9404-6FD191A2B36B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BAF8BC1-A1C7-44CC-A5C8-F9943A87901D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BAF8BC1-A1C7-44CC-A5C8-F9943A87901D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BAF8BC1-A1C7-44CC-A5C8-F9943A87901D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BAF8BC1-A1C7-44CC-A5C8-F9943A87901D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{0CDECB5B-C887-4665-B95C-E0108A3D1F0D} = {87CE6454-DFE1-4E5E-BA7D-6E981A0256DF}
 		{4590C75F-B251-4A18-8E85-6DC092171222} = {87CE6454-DFE1-4E5E-BA7D-6E981A0256DF}
 		{9312D426-4333-42A1-9404-6FD191A2B36B} = {87CE6454-DFE1-4E5E-BA7D-6E981A0256DF}
+		{4BAF8BC1-A1C7-44CC-A5C8-F9943A87901D} = {87CE6454-DFE1-4E5E-BA7D-6E981A0256DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {29545771-6EAC-4B41-9942-E68F79302B8D}
