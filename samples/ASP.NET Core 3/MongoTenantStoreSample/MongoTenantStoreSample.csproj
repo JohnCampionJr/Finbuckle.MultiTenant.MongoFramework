@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Finbuckle.MultiTenant.AspNetCore" Version="6.0.0" />
-    <PackageReference Include="MongoFramework" Version="0.23.1" />
-    <PackageReference Include="MongoFramework.AspNetCore.Identity" Version="0.1.0.1" />
+    <PackageReference Include="Finbuckle.MultiTenant.AspNetCore" Version="6.1.0" />
+    <PackageReference Include="MongoFramework" Version="0.25.0" />
+    <PackageReference Include="MongoFramework.AspNetCore.Identity" Version="0.3.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -8,19 +8,14 @@
 
   <ItemGroup>
     <PackageReference Include="Finbuckle.MultiTenant.AspNetCore" Version="6.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
-    <PackageReference Include="MongoFramework" Version="0.23.1" />
-    <PackageReference Include="MongoFramework.AspNetCore.Identity" Version="0.1.0.1" />
+    <PackageReference Include="MongoFramework" Version="0.25.0" />
+    <PackageReference Include="MongoFramework.AspNetCore.Identity" Version="0.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Finbuckle.MultiTenant.MongoFramework\Finbuckle.MultiTenant.MongoFramework.csproj" />
-    <ProjectReference Include="..\..\..\tests\Finbuckle.MultiTenant.MongoFramework.Tests\Finbuckle.MultiTenant.MongoFramework.Tests.csproj" />
   </ItemGroup>
 
 </Project>
