@@ -15,20 +15,20 @@ namespace Microsoft.Extensions.DependencyInjection
             return AddMongoPerTenantConnection<IMongoPerTenantConnection, MongoPerTenantConnection>(serviceCollection, optionsAction, contextLifetime);
         }
 
-        public static IServiceCollection AddMongoPerTenantConnection<TContext>(
+        public static IServiceCollection AddMongoPerTenantConnection<TConnection>(
                 this IServiceCollection serviceCollection,
                 Action<MongoPerTenantConnectionOptions> optionsAction = null,
                 ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
-                where TContext : IMongoPerTenantConnection
+                where TConnection : IMongoPerTenantConnection
         {
-            return AddMongoPerTenantConnection<IMongoPerTenantConnection, TContext>(serviceCollection, optionsAction, contextLifetime);
+            return AddMongoPerTenantConnection<IMongoPerTenantConnection, TConnection>(serviceCollection, optionsAction, contextLifetime);
         }
 
-        public static IServiceCollection AddMongoPerTenantConnection<TContextService, TContextImplementation>(
+        public static IServiceCollection AddMongoPerTenantConnection<TConnectionService, TConnectionImplementation>(
             this IServiceCollection serviceCollection,
             Action<MongoPerTenantConnectionOptions> optionsAction = null,
             ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
-            where TContextImplementation : IMongoPerTenantConnection, TContextService
+            where TConnectionImplementation : IMongoPerTenantConnection, TConnectionService
         {
 
             Check.NotNull(serviceCollection, nameof(serviceCollection));
@@ -45,7 +45,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 });
             }
 
-            serviceCollection.Add(new ServiceDescriptor(typeof(TContextService), typeof(TContextImplementation), contextLifetime));
+            serviceCollection.Add(new ServiceDescriptor(typeof(TConnectionService), typeof(TConnectionImplementation), contextLifetime));
 
             return serviceCollection;
         }
