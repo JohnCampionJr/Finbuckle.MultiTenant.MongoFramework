@@ -27,7 +27,7 @@ namespace DataIsolationSample
             services.AddMultiTenant<MongoTenantInfo>()
                 .WithMongoFrameworkStore(Configuration.GetConnectionString("TenantStoreConnection"))
                 .WithRouteStrategy()
-                .WithRedirectStrategy("/notenant");
+                .WithRedirectStrategy("/notenant/index");
 
             services.AddMongoPerTenantConnection(Configuration.GetConnectionString("DefaultPerTenantConnection"));
 
@@ -57,12 +57,12 @@ namespace DataIsolationSample
             SetupStore(app.ApplicationServices);
             SetupDb(app.ApplicationServices);
         }
-        
+
         private void SetupStore(IServiceProvider sp)
         {
             var scopeServices = sp.CreateScope().ServiceProvider;
             var store = scopeServices.GetRequiredService<IMultiTenantStore<MongoTenantInfo>>();
-            
+
             if (store.GetAllAsync().Result.Any()) return;
 
             store.TryAddAsync(new MongoTenantInfo{Id = "tenant-finbuckle-d043favoiaw", Identifier = "finbuckle", Name = "Finbuckle"}).Wait();
@@ -70,13 +70,15 @@ namespace DataIsolationSample
             store.TryAddAsync(new MongoTenantInfo{Id = "tenant-megacorp-g754dafg", Identifier = "megacorp", Name = "MegaCorp Inc"}).Wait();
         }
 
-        
+
         private void SetupDb(IServiceProvider sp)
         {
             var scopeServices = sp.CreateScope().ServiceProvider;
             var store = scopeServices.GetRequiredService<IMultiTenantStore<MongoTenantInfo>>();
 
             var ti = store.TryGetByIdentifierAsync("finbuckle").Result;
+            if (ti.ConnectionString is null) ti.ConnectionString = Configuration.GetConnectionString("DefaultPerTenantConnection");
+
             var conn = new MongoPerTenantConnection(ti);
             using (var db = new ToDoDbContext(conn, ti))
             {
@@ -89,6 +91,7 @@ namespace DataIsolationSample
                 }
             }
             ti = store.TryGetByIdentifierAsync("megacorp").Result;
+            if (ti.ConnectionString is null) ti.ConnectionString = Configuration.GetConnectionString("DefaultPerTenantConnection");
             conn = new MongoPerTenantConnection(ti);
             using (var db = new ToDoDbContext(conn, ti))
             {
@@ -101,6 +104,7 @@ namespace DataIsolationSample
                 }
             }
             ti = store.TryGetByIdentifierAsync("initech").Result;
+            if (ti.ConnectionString is null) ti.ConnectionString = Configuration.GetConnectionString("DefaultPerTenantConnection");
             conn = new MongoPerTenantConnection(ti);
             using (var db = new ToDoDbContext(conn, ti))
             {

@@ -27,7 +27,7 @@ namespace DataIsolationSample
             services.AddMultiTenant<TenantInfo>()
                 .WithConfigurationStore()
                 .WithRouteStrategy()
-                .WithRedirectStrategy("/notenant");
+                .WithRedirectStrategy("/notenant/index");
 
             services.AddScoped<IMongoPerTenantConnection, MongoPerTenantConnection>();
 
