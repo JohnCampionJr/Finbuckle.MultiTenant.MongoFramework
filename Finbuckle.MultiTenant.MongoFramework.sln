@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30611.23
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{361C3E41-652C-480A-B249-58CEEB13DD07}"
 	ProjectSection(SolutionItems) = preProject
@@ -32,6 +32,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{95E58738-E5A6-447D-B5CA-EE2ED34F49D6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET 5.0", ".NET 5.0", "{87CE6454-DFE1-4E5E-BA7D-6E981A0256DF}"
+	ProjectSection(SolutionItems) = preProject
+		samples\ASP.NET Core 3\Directory.Build.props = samples\ASP.NET Core 3\Directory.Build.props
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataIsolationSample", "samples\ASP.NET Core 3\DataIsolationSample\DataIsolationSample.csproj", "{0CDECB5B-C887-4665-B95C-E0108A3D1F0D}"
 EndProject
@@ -39,7 +42,20 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoTenantStoreSample", "s
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CombinedSample", "samples\ASP.NET Core 3\CombinedSample\CombinedSample.csproj", "{9312D426-4333-42A1-9404-6FD191A2B36B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthenticationSample", "samples\ASP.NET Core 3\AuthenticationSample\AuthenticationSample.csproj", "{4BAF8BC1-A1C7-44CC-A5C8-F9943A87901D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationSample", "samples\ASP.NET Core 3\AuthenticationSample\AuthenticationSample.csproj", "{4BAF8BC1-A1C7-44CC-A5C8-F9943A87901D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET 6.0", ".NET 6.0", "{C8CE2502-D5FC-4F6B-91A1-DC3679D64F09}"
+	ProjectSection(SolutionItems) = preProject
+		samples\NET6\Directory.Build.props = samples\NET6\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationSample", "samples\NET6\AuthenticationSample\AuthenticationSample.csproj", "{20FB838D-307A-4C91-8309-6DE956C7C5E6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CombinedSample", "samples\NET6\CombinedSample\CombinedSample.csproj", "{C74E5E97-9DFB-4C1D-9625-2E5D8D3DF714}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataIsolationSample", "samples\NET6\DataIsolationSample\DataIsolationSample.csproj", "{5BD440C3-8929-4058-84A3-E8D6FE64C460}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoTenantStoreSample", "samples\NET6\MongoTenantStoreSample\MongoTenantStoreSample.csproj", "{4E3D2992-1195-4AFF-B258-A3FBE85EE320}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +87,22 @@ Global
 		{4BAF8BC1-A1C7-44CC-A5C8-F9943A87901D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BAF8BC1-A1C7-44CC-A5C8-F9943A87901D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BAF8BC1-A1C7-44CC-A5C8-F9943A87901D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20FB838D-307A-4C91-8309-6DE956C7C5E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20FB838D-307A-4C91-8309-6DE956C7C5E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20FB838D-307A-4C91-8309-6DE956C7C5E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20FB838D-307A-4C91-8309-6DE956C7C5E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C74E5E97-9DFB-4C1D-9625-2E5D8D3DF714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C74E5E97-9DFB-4C1D-9625-2E5D8D3DF714}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C74E5E97-9DFB-4C1D-9625-2E5D8D3DF714}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C74E5E97-9DFB-4C1D-9625-2E5D8D3DF714}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BD440C3-8929-4058-84A3-E8D6FE64C460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BD440C3-8929-4058-84A3-E8D6FE64C460}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BD440C3-8929-4058-84A3-E8D6FE64C460}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BD440C3-8929-4058-84A3-E8D6FE64C460}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E3D2992-1195-4AFF-B258-A3FBE85EE320}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E3D2992-1195-4AFF-B258-A3FBE85EE320}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E3D2992-1195-4AFF-B258-A3FBE85EE320}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E3D2992-1195-4AFF-B258-A3FBE85EE320}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +115,11 @@ Global
 		{4590C75F-B251-4A18-8E85-6DC092171222} = {87CE6454-DFE1-4E5E-BA7D-6E981A0256DF}
 		{9312D426-4333-42A1-9404-6FD191A2B36B} = {87CE6454-DFE1-4E5E-BA7D-6E981A0256DF}
 		{4BAF8BC1-A1C7-44CC-A5C8-F9943A87901D} = {87CE6454-DFE1-4E5E-BA7D-6E981A0256DF}
+		{C8CE2502-D5FC-4F6B-91A1-DC3679D64F09} = {95E58738-E5A6-447D-B5CA-EE2ED34F49D6}
+		{20FB838D-307A-4C91-8309-6DE956C7C5E6} = {C8CE2502-D5FC-4F6B-91A1-DC3679D64F09}
+		{C74E5E97-9DFB-4C1D-9625-2E5D8D3DF714} = {C8CE2502-D5FC-4F6B-91A1-DC3679D64F09}
+		{5BD440C3-8929-4058-84A3-E8D6FE64C460} = {C8CE2502-D5FC-4F6B-91A1-DC3679D64F09}
+		{4E3D2992-1195-4AFF-B258-A3FBE85EE320} = {C8CE2502-D5FC-4F6B-91A1-DC3679D64F09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {29545771-6EAC-4B41-9942-E68F79302B8D}

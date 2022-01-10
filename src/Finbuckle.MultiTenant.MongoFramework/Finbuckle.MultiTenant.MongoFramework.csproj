@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net5.0;netcoreapp3.1;netcoreapp2.1</TargetFrameworks>
+        <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
         <PackageTags>$(PackageBaseTags)</PackageTags>
         <AssemblyName>Finbuckle.MultiTenant.MongoFramework</AssemblyName>
         <Title>Finbuckle.MultiTenant.MongoFramework</Title>
@@ -11,9 +11,23 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Finbuckle.MultiTenant" Version="6.2.0" />
-      <PackageReference Include="MongoFramework" Version="0.25.0" />
+
     </ItemGroup>
+
+    <Choose>
+      <When Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+        <ItemGroup>
+          <PackageReference Include="Finbuckle.MultiTenant" Version="6.2.0" />
+          <PackageReference Include="MongoFramework" Version="0.25.0" />
+        </ItemGroup>
+      </When>
+      <Otherwise>
+        <ItemGroup>
+          <PackageReference Include="Finbuckle.MultiTenant" Version="6.5.1" />
+          <PackageReference Include="MongoFramework" Version="0.26.1" />
+        </ItemGroup>
+      </Otherwise>
+    </Choose>
 
     <ItemGroup>
       <Compile Remove="IMongoTenantStoreContext.cs" />
