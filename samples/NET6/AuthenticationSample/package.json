@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "name": "asp.net",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "4.3.1",
+    "jquery": "3.5.1",
+    "jquery-validation": "^1.19.3",
+    "jquery-validation-unobtrusive": "3.2.11",
+    "popper.js": "^1.14.7"
+  },
+  "devDependencies": {
+    "copyfiles": "latest"
+  },
+  "scripts": {
+    "copybootstrapcss": "copyfiles -u 1 node_modules/bootstrap/dist/css/*.css wwwroot/lib/",
+    "copybootstrapjs": "copyfiles -u 1 node_modules/bootstrap/dist/js/*.js wwwroot/lib/",
+    "copyjquery": "copyfiles -u 1 node_modules/jquery/dist/jquery.js wwwroot/lib/",
+    "copyjquery-validation": "copyfiles -u 1 node_modules/jquery-validation/**/*.js wwwroot/lib/",
+    "copyjquery-validation-u": "copyfiles -u 1 node_modules/jquery-validation-unobtrusive/**/*.js wwwroot/lib/",
+    "copyall": "npm run copybootstrapcss && npm run copybootstrapjs && npm run copyjquery && npm run copyjquery-validation && npm run copyjquery-validation-u"
+
+  }
+}
