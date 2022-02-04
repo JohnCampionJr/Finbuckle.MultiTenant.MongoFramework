@@ -2,12 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using AuthenticationSample;
 using AuthenticationSample.Data;
-using Finbuckle.MultiTenant;
 using Finbuckle.Utilities.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
@@ -42,6 +39,9 @@ services.AddMultiTenant<SampleTenantInfo>()
         .WithMongoFrameworkStore(builder.Configuration.GetConnectionString("TenantStoreConnection"))
         .WithPerTenantAuthentication();
 
+//NOTE: this service will be called by the runtime when application is actually started
+services.AddSingleton<IHostedService, ApplicationStartedService>();
+
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
@@ -68,19 +68,5 @@ app.UseEndpoints(endpoints =>
     endpoints.MapRazorPages();
 });
 
-// Seed the database the multitenant store will need.
-SetupStore(builder.Services.BuildServiceProvider());
 
-
-static void SetupStore(IServiceProvider sp)
-{
-    var scopeServices = sp.CreateScope().ServiceProvider;
-    var store = scopeServices.GetRequiredService<IMultiTenantStore<SampleTenantInfo>>();
-
-    if (store.GetAllAsync().Result.Any()) return;
-
-    store.TryAddAsync(new SampleTenantInfo { Id = "tenant-finbuckle-d043favoiaw", Identifier = "finbuckle", Name = "Finbuckle" }).Wait();
-    store.TryAddAsync(new SampleTenantInfo { Id = "tenant-initech-341ojadsfa", Identifier = "initech", Name = "Initech LLC", ConnectionString = "mongodb://localhost/samples-auth-initech" }).Wait();
-    store.TryAddAsync(new SampleTenantInfo { Id = "tenant-megacorp-g754dafg", Identifier = "megacorp", Name = "MegaCorp Inc" }).Wait();
-}
-
+app.RunAsync();
