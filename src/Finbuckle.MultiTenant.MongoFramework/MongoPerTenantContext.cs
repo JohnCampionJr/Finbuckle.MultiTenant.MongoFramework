@@ -2,17 +2,16 @@
 using MongoFramework;
 
 // ReSharper disable once CheckNamespace
-namespace MongoFramework
+namespace MongoFramework;
+
+public class MongoPerTenantContext : MongoDbTenantContext
 {
-    public class MongoPerTenantContext : MongoDbTenantContext
+
+    // can't pass null as tenant ID, but the context is still created for the controller prior to the no tenant redirection
+    public MongoPerTenantContext(IMongoPerTenantConnection connection, ITenantInfo ti) : base(connection, ti?.Id ?? "")
     {
-
-        // can't pass null as tenant ID, but the context is still created for the controller prior to the no tenant redirection
-        public MongoPerTenantContext(IMongoPerTenantConnection connection, ITenantInfo ti) : base(connection, ti?.Id ?? "")
-        {
-            TenantInfo = ti;
-        }
-
-        public ITenantInfo TenantInfo { get; }
+        TenantInfo = ti;
     }
+
+    public ITenantInfo TenantInfo { get; }
 }

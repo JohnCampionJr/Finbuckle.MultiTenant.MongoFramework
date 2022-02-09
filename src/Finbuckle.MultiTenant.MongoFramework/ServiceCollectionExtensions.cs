@@ -3,91 +3,89 @@ using MongoFramework;
 using MongoFramework.Utilities;
 
 // ReSharper disable once CheckNamespace
-namespace Microsoft.Extensions.DependencyInjection
+namespace Microsoft.Extensions.DependencyInjection;
+
+public static class ServiceCollectionExtensions
 {
-    public static class ServiceCollectionExtensions
+    public static IServiceCollection AddMongoPerTenantConnection(
+        this IServiceCollection serviceCollection,
+        Action<MongoPerTenantConnectionOptions> optionsAction = null,
+        ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
     {
-        public static IServiceCollection AddMongoPerTenantConnection(
-                this IServiceCollection serviceCollection,
-                Action<MongoPerTenantConnectionOptions> optionsAction = null,
-                ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
+        return AddMongoPerTenantConnection<IMongoPerTenantConnection, MongoPerTenantConnection>(serviceCollection, optionsAction, contextLifetime);
+    }
+
+    public static IServiceCollection AddMongoPerTenantConnection<TConnection>(
+        this IServiceCollection serviceCollection,
+        Action<MongoPerTenantConnectionOptions> optionsAction = null,
+        ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
+        where TConnection : IMongoPerTenantConnection
+    {
+        return AddMongoPerTenantConnection<IMongoPerTenantConnection, TConnection>(serviceCollection, optionsAction, contextLifetime);
+    }
+
+    public static IServiceCollection AddMongoPerTenantConnection<TConnectionService, TConnectionImplementation>(
+        this IServiceCollection serviceCollection,
+        Action<MongoPerTenantConnectionOptions> optionsAction = null,
+        ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
+        where TConnectionImplementation : IMongoPerTenantConnection, TConnectionService
+    {
+
+        Check.NotNull(serviceCollection, nameof(serviceCollection));
+
+        if (optionsAction != null)
         {
-            return AddMongoPerTenantConnection<IMongoPerTenantConnection, MongoPerTenantConnection>(serviceCollection, optionsAction, contextLifetime);
-        }
+            var options = new MongoPerTenantConnectionOptions();
+            optionsAction?.Invoke(options);
 
-        public static IServiceCollection AddMongoPerTenantConnection<TConnection>(
-                this IServiceCollection serviceCollection,
-                Action<MongoPerTenantConnectionOptions> optionsAction = null,
-                ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
-                where TConnection : IMongoPerTenantConnection
-        {
-            return AddMongoPerTenantConnection<IMongoPerTenantConnection, TConnection>(serviceCollection, optionsAction, contextLifetime);
-        }
-
-        public static IServiceCollection AddMongoPerTenantConnection<TConnectionService, TConnectionImplementation>(
-            this IServiceCollection serviceCollection,
-            Action<MongoPerTenantConnectionOptions> optionsAction = null,
-            ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
-            where TConnectionImplementation : IMongoPerTenantConnection, TConnectionService
-        {
-
-            Check.NotNull(serviceCollection, nameof(serviceCollection));
-
-            if (optionsAction != null)
+            serviceCollection.Configure<MongoPerTenantConnectionOptions>(o =>
             {
-                var options = new MongoPerTenantConnectionOptions();
-                optionsAction?.Invoke(options);
-
-                serviceCollection.Configure<MongoPerTenantConnectionOptions>(o =>
-                {
-                    o.DefaultConnectionString = options.DefaultConnectionString;
-                    o.DiagnosticListener = options.DiagnosticListener;
-                });
-            }
-
-            serviceCollection.Add(new ServiceDescriptor(typeof(TConnectionService), typeof(TConnectionImplementation), contextLifetime));
-
-            return serviceCollection;
+                o.DefaultConnectionString = options.DefaultConnectionString;
+                o.DiagnosticListener = options.DiagnosticListener;
+            });
         }
 
-        public static IServiceCollection AddMongoPerTenantConnection(
+        serviceCollection.Add(new ServiceDescriptor(typeof(TConnectionService), typeof(TConnectionImplementation), contextLifetime));
+
+        return serviceCollection;
+    }
+
+    public static IServiceCollection AddMongoPerTenantConnection(
         this IServiceCollection serviceCollection,
         string defaultConnectionString,
         ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
+    {
+        return AddMongoPerTenantConnection<IMongoPerTenantConnection, MongoPerTenantConnection>(serviceCollection, defaultConnectionString, contextLifetime);
+    }
+
+    public static IServiceCollection AddMongoPerTenantConnection<TConnection>(
+        this IServiceCollection serviceCollection,
+        string defaultConnectionString,
+        ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
+        where TConnection : IMongoPerTenantConnection
+    {
+        return AddMongoPerTenantConnection<IMongoPerTenantConnection, TConnection>(serviceCollection, defaultConnectionString, contextLifetime);
+    }
+
+    public static IServiceCollection AddMongoPerTenantConnection<TConnectionService, TConnectionImplementation>(
+        this IServiceCollection serviceCollection,
+        string defaultConnectionString,
+        ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
+        where TConnectionImplementation : IMongoPerTenantConnection, TConnectionService
+    {
+
+        Check.NotNull(serviceCollection, nameof(serviceCollection));
+
+        if (!string.IsNullOrEmpty(defaultConnectionString))
         {
-            return AddMongoPerTenantConnection<IMongoPerTenantConnection, MongoPerTenantConnection>(serviceCollection, defaultConnectionString, contextLifetime);
-        }
-
-        public static IServiceCollection AddMongoPerTenantConnection<TConnection>(
-                this IServiceCollection serviceCollection,
-                string defaultConnectionString,
-                ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
-                where TConnection : IMongoPerTenantConnection
-        {
-            return AddMongoPerTenantConnection<IMongoPerTenantConnection, TConnection>(serviceCollection, defaultConnectionString, contextLifetime);
-        }
-
-        public static IServiceCollection AddMongoPerTenantConnection<TConnectionService, TConnectionImplementation>(
-            this IServiceCollection serviceCollection,
-            string defaultConnectionString,
-            ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
-            where TConnectionImplementation : IMongoPerTenantConnection, TConnectionService
-        {
-
-            Check.NotNull(serviceCollection, nameof(serviceCollection));
-
-            if (!string.IsNullOrEmpty(defaultConnectionString))
+            serviceCollection.Configure<MongoPerTenantConnectionOptions>(o =>
             {
-                serviceCollection.Configure<MongoPerTenantConnectionOptions>(o =>
-                {
-                    o.DefaultConnectionString = defaultConnectionString;
-                });
-            }
-
-            serviceCollection.Add(new ServiceDescriptor(typeof(TConnectionService), typeof(TConnectionImplementation), contextLifetime));
-
-            return serviceCollection;
+                o.DefaultConnectionString = defaultConnectionString;
+            });
         }
+
+        serviceCollection.Add(new ServiceDescriptor(typeof(TConnectionService), typeof(TConnectionImplementation), contextLifetime));
+
+        return serviceCollection;
     }
 }
-
