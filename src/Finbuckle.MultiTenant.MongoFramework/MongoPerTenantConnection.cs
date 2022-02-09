@@ -25,11 +25,11 @@ public class MongoPerTenantConnection : MongoDbConnection, IMongoPerTenantConnec
     {
         Check.NotNull(ti, nameof(ti));
         TenantInfo = ti;
-        if (!string.IsNullOrEmpty(ti.ConnectionString) && ti.ConnectionString.ToLower().StartsWith("mongodb://"))
+        if (IsMongoDbConnectionString(ti.ConnectionString))
         {
             Url = new MongoUrl(ti.ConnectionString);
         }
-        else if (!string.IsNullOrEmpty(options?.Value?.DefaultConnectionString) && options.Value.DefaultConnectionString.ToLower().StartsWith("mongodb://"))
+        else if (IsMongoDbConnectionString(options?.Value?.DefaultConnectionString))
         {
             Url = new MongoUrl(options.Value.DefaultConnectionString);
         }
@@ -37,5 +37,11 @@ public class MongoPerTenantConnection : MongoDbConnection, IMongoPerTenantConnec
         {
             throw new ArgumentException("Connection String required.");
         }
+    }
+
+    private static bool IsMongoDbConnectionString(string value)
+    {
+        if (string.IsNullOrEmpty(value)) return false;
+        return value.ToLower().StartsWith("mongodb://") || value.ToLower().StartsWith("mongodb+srv://");
     }
 }
