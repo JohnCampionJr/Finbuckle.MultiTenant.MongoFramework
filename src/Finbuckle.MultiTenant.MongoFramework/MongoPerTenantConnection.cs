@@ -41,7 +41,10 @@ public class MongoPerTenantConnection : MongoDbConnection, IMongoPerTenantConnec
 
     private static bool IsMongoDbConnectionString(string value)
     {
-        if (string.IsNullOrEmpty(value)) return false;
-        return value.ToLower().StartsWith("mongodb://") || value.ToLower().StartsWith("mongodb+srv://");
+        if (string.IsNullOrEmpty(value))
+        {
+            return false;
+        }
+        return value.ToLowerInvariant().StartsWith("mongodb://") || value.ToLowerInvariant().StartsWith("mongodb+srv://");
     }
 }
