@@ -31,8 +31,11 @@ jobs:
 # If you want to specify a particular version, use this. Otherwise, will use the Runner's installed version      
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 6.0.x
+      with:        
+        dotnet-version: |
+          3.1.x
+          5.0.x
+          6.0.x
     - name: Install dependencies
       run: dotnet restore
     - name: Build
