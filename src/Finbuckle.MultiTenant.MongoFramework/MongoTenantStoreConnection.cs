@@ -3,15 +3,14 @@
 // ReSharper disable once CheckNamespace
 using MongoDB.Driver;
 
-namespace MongoFramework
-{
-    public interface IMongoTenantStoreConnection : IMongoDbConnection { }
+namespace MongoFramework;
 
-    public class MongoTenantStoreConnection : MongoDbConnection, IMongoTenantStoreConnection
+public interface IMongoTenantStoreConnection : IMongoDbConnection { }
+
+public class MongoTenantStoreConnection : MongoDbConnection, IMongoTenantStoreConnection
+{
+    public MongoTenantStoreConnection(string connectionString)
     {
-        public MongoTenantStoreConnection(string connectionString)
-        {
-            this.Url = MongoUrl.Create(connectionString);
-        }
+        this.Url = MongoUrl.Create(connectionString);
     }
 }
