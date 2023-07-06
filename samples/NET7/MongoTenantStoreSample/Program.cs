@@ -39,4 +39,4 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute("default", "{__tenant__=}/{controller=Home}/{action=Index}");
 });
 
-app.RunAsync();
+await app.RunAsync();

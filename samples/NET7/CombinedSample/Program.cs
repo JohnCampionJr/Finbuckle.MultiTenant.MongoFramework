@@ -50,4 +50,4 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllerRoute("notenant", "/{controller=NoTenant}/{action=Index}/{id?}");
 });
 
-app.RunAsync();
+await app.RunAsync();

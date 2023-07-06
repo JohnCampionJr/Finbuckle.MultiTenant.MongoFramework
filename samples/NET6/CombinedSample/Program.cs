@@ -48,4 +48,4 @@ app.UseEndpoints(endpoints =>
 });
 
 
-app.RunAsync();
+await app.RunAsync();
