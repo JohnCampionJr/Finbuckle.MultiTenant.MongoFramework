@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MongoFramework" Version="0.28.1" />
+    <PackageReference Include="MongoFramework" Version="0.29.0" />
 
   </ItemGroup>
 
@@ -28,7 +28,7 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <PackageReference Include="Finbuckle.MultiTenant" Version="6.10.0" />
+        <PackageReference Include="Finbuckle.MultiTenant" Version="6.11.1" />
       </ItemGroup>
     </Otherwise>
   </Choose>
