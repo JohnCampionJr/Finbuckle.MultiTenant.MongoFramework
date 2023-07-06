@@ -1,0 +1,16 @@
+<Project>
+
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>ASP0014</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Finbuckle.MultiTenant.AspNetCore" Version="6.10.0" />
+    <PackageReference Include="MongoFramework.AspNetCore.Identity" Version="0.4.0" /> <!-- AddMongoDbContext -->
+  </ItemGroup>
+
+</Project>

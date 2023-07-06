@@ -2,11 +2,11 @@ name: .NET Core Coverage (Ubuntu)
 
 on:
   push:
-    # branches: 
-    # branches-ignore: 
+    # branches:
+    # branches-ignore:
   pull_request:
-    # branches: 
-    # branches-ignore: 
+    # branches:
+    # branches-ignore:
 
 env:
   # Disable the .NET logo in the console output.
@@ -22,20 +22,21 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Configure MongoDB (Ubuntu)
       run: sudo systemctl start mongod
     - name: Checkout
       uses: actions/checkout@v2
-# If you want to specify a particular version, use this. Otherwise, will use the Runner's installed version      
+# If you want to specify a particular version, use this. Otherwise, will use the Runner's installed version
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
-      with:        
+      with:
         dotnet-version: |
           3.1.x
           5.0.x
           6.0.x
+          7.0.x
     - name: Install dependencies
       run: dotnet restore
     - name: Build
@@ -43,10 +44,10 @@ jobs:
 # These two options cannot be combined because the logger causes duplicate coverage reports to go to CodeCov
 # https://github.com/coverlet-coverage/coverlet/issues/733
 # if you want the test results, best to run separately
-#    - name: Test 
+#    - name: Test
 #      run: dotnet test --logger trx --results-directory ${{env.BUILD_ARTIFACT_PATH}}/test-results
     - name: Test with coverage
-      run: dotnet test --results-directory ${{env.BUILD_ARTIFACT_PATH}}/coverage --collect "XPlat Code Coverage" --settings CodeCoverage.runsettings      
+      run: dotnet test --results-directory ${{env.BUILD_ARTIFACT_PATH}}/coverage --collect "XPlat Code Coverage" --settings CodeCoverage.runsettings
     - name: Upload coverage report
       uses: codecov/codecov-action@v1.0.13
       with:
