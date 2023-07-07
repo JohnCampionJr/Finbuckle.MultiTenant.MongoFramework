@@ -1,6 +1,6 @@
 ---
 exclude_paths:
-  - 'samples/**/*'
+  - 'examples/**/*'
   - 'tests/**/*'
   - 'build.ps1'
   - 'README.md'

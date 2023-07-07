@@ -37,7 +37,7 @@ public class ApplicationStartedService : IHostedService
         return Task.CompletedTask;
     }
 
-    private async Task SetupStore(IMultiTenantStore<MongoTenantInfo> store)
+    private static async Task SetupStore(IMultiTenantStore<MongoTenantInfo> store)
     {
         if (store.GetAllAsync().Result.Any()) return;
 

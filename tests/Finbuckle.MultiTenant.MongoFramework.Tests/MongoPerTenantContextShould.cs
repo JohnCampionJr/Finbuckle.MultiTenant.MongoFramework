@@ -11,7 +11,10 @@ namespace Finbuckle.MultiTenant.Tests
         {
             var ti = new MongoTenantInfo
             {
-                Id = "initech-id", Identifier = "initech", Name = "Initech", ConnectionString = "mongodb://localhost/"
+                Id = "initech-id",
+                Identifier = "initech",
+                Name = "Initech",
+                ConnectionString = "mongodb://localhost/"
             };
             var conn = new MongoPerTenantConnection(ti);
             var context = new MongoPerTenantContext(conn, ti);

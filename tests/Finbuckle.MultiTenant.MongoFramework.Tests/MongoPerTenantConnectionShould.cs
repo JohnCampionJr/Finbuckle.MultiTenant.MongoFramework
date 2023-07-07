@@ -8,39 +8,16 @@ namespace Finbuckle.MultiTenant.Tests
 {
     public class MongoPerTenantConnectionShould
     {
-        private IMultiTenantStore<MongoTenantInfo> CreateTestStore()
-        {
-            var conn = new MongoTenantStoreConnection("mongodb://localhost/TenantTests");
-            conn.GetDatabase().DropCollection("Tenants");
-            var context = new MongoTenantStoreContext(conn);
-            var store = new MongoTenantStore<MongoTenantInfo>(context);
-            return PopulateTestStore(store);
-        }
-
-        private IMultiTenantStore<MongoTenantInfo> PopulateTestStore(IMultiTenantStore<MongoTenantInfo> store)
-        {
-            _ = store.TryAddAsync(new MongoTenantInfo
-            {
-                Id = "initech-id", Identifier = "initech", Name = "Initech", ConnectionString = "connstring"
-            }).Result;
-            _ = store.TryAddAsync(new MongoTenantInfo
-            {
-                Id = "lol-id", Identifier = "lol", Name = "Lol, Inc.", ConnectionString = "connstring2"
-            }).Result;
-            _ = store.TryAddAsync(new MongoTenantInfo
-            {
-                Id = "default-id", Identifier = "default", Name = "Default Conn, Inc."
-            }).Result;
-
-            return store;
-        }
 
         [Fact]
         public void SetsUrlWithTenantConnectionString()
         {
             var ti = new MongoTenantInfo
             {
-                Id = "initech-id", Identifier = "initech", Name = "Initech", ConnectionString = "mongodb://localhost"
+                Id = "initech-id",
+                Identifier = "initech",
+                Name = "Initech",
+                ConnectionString = "mongodb://localhost"
             };
 
             var conn = new MongoPerTenantConnection(ti);
@@ -81,7 +58,9 @@ namespace Finbuckle.MultiTenant.Tests
         {
             var ti = new MongoTenantInfo
             {
-                Id = "initech-id", Identifier = "initech", Name = "Initech"
+                Id = "initech-id",
+                Identifier = "initech",
+                Name = "Initech"
             };
 
             Should.Throw<ArgumentException>(() =>
@@ -95,7 +74,10 @@ namespace Finbuckle.MultiTenant.Tests
         {
             var ti = new MongoTenantInfo
             {
-                Id = "initech-id", Identifier = "initech", Name = "Initech", ConnectionString = "conn_string"
+                Id = "initech-id",
+                Identifier = "initech",
+                Name = "Initech",
+                ConnectionString = "conn_string"
             };
 
             Should.Throw<ArgumentException>(() =>
