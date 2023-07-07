@@ -12,7 +12,7 @@ namespace MongoFramework;
 /// <summary>
 /// A MongoDbConnection that accepts a TenantInfo and uses its connection string to create the Data Context
 /// </summary>
-public interface IMongoPerTenantConnection: IMongoDbConnection
+public interface IMongoPerTenantConnection : IMongoDbConnection
 {
     ITenantInfo TenantInfo { get; }
 }

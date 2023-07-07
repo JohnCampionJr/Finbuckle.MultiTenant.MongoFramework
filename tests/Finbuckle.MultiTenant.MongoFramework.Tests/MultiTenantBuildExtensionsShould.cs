@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Finbuckle.MultiTenant.Stores;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using MongoFramework;
 using Shouldly;

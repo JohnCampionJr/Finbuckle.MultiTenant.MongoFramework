@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Finbuckle.MultiTenant.Stores;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using MongoFramework;
 using Shouldly;
@@ -20,12 +19,10 @@ namespace Finbuckle.MultiTenant.Tests
             services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Identifier = "test", ConnectionString = "mongodb://tenant" });
 
             var provider = services.BuildServiceProvider();
-            using (var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var db = scoped.ServiceProvider.GetRequiredService<IMongoPerTenantConnection>();
-                db.ShouldBeOfType<MongoPerTenantConnection>();
-                db.Client.Settings.Server.Host.ShouldBe("tenant");
-            }
+            using var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var db = scoped.ServiceProvider.GetRequiredService<IMongoPerTenantConnection>();
+            db.ShouldBeOfType<MongoPerTenantConnection>();
+            db.Client.Settings.Server.Host.ShouldBe("tenant");
         }
 
         [Fact]
@@ -36,12 +33,10 @@ namespace Finbuckle.MultiTenant.Tests
             services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Identifier = "test" });
 
             var provider = services.BuildServiceProvider();
-            using (var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var db = scoped.ServiceProvider.GetRequiredService<IMongoPerTenantConnection>();
-                db.ShouldBeOfType<MongoPerTenantConnection>();
-                db.Client.Settings.Server.Host.ShouldBe("localhost");
-            }
+            using var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var db = scoped.ServiceProvider.GetRequiredService<IMongoPerTenantConnection>();
+            db.ShouldBeOfType<MongoPerTenantConnection>();
+            db.Client.Settings.Server.Host.ShouldBe("localhost");
         }
 
         [Fact]
@@ -52,12 +47,10 @@ namespace Finbuckle.MultiTenant.Tests
             services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Identifier = "test" });
 
             var provider = services.BuildServiceProvider();
-            using (var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var db = scoped.ServiceProvider.GetRequiredService<IMongoPerTenantConnection>();
-                db.ShouldBeOfType<MongoPerTenantConnection>();
-                db.Client.Settings.Server.Host.ShouldBe("localhost");
-            }
+            using var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var db = scoped.ServiceProvider.GetRequiredService<IMongoPerTenantConnection>();
+            db.ShouldBeOfType<MongoPerTenantConnection>();
+            db.Client.Settings.Server.Host.ShouldBe("localhost");
         }
 
         [Fact]
@@ -68,12 +61,10 @@ namespace Finbuckle.MultiTenant.Tests
             services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Identifier = "test" });
 
             var provider = services.BuildServiceProvider();
-            using (var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var db = scoped.ServiceProvider.GetRequiredService<IMongoPerTenantConnection>();
-                db.ShouldBeOfType<MongoPerTenantConnection>();
-                db.Client.Settings.Server.Host.ShouldBe("localhost");
-            }
+            using var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var db = scoped.ServiceProvider.GetRequiredService<IMongoPerTenantConnection>();
+            db.ShouldBeOfType<MongoPerTenantConnection>();
+            db.Client.Settings.Server.Host.ShouldBe("localhost");
         }
 
         [Fact]
@@ -84,12 +75,10 @@ namespace Finbuckle.MultiTenant.Tests
             services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Identifier = "test" });
 
             var provider = services.BuildServiceProvider();
-            using (var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var db = scoped.ServiceProvider.GetRequiredService<IMongoPerTenantConnection>();
-                db.ShouldBeOfType<MongoPerTenantConnection>();
-                db.Client.Settings.Server.Host.ShouldBe("localhost");
-            }
+            using var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            var db = scoped.ServiceProvider.GetRequiredService<IMongoPerTenantConnection>();
+            db.ShouldBeOfType<MongoPerTenantConnection>();
+            db.Client.Settings.Server.Host.ShouldBe("localhost");
         }
 
     }
