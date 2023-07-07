@@ -1,4 +1,4 @@
-name: .NET Core Test (Multi-OS)
+name: .NET Test (Multi-OS)
 
 on:
   push:
