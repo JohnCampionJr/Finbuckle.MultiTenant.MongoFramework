@@ -1,16 +1,11 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-using System;
-using System.Linq;
-using System.Threading;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using DataIsolationSample.Data;
 using DataIsolationSample.Models;
 using Finbuckle.MultiTenant;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using MongoFramework;
 
 namespace CombinedSample;
@@ -19,32 +14,19 @@ namespace CombinedSample;
 /// Seed the database the multi-tenant store we'll need.
 /// When application has started
 /// </summary>
-public class ApplicationStartedService : IHostedService
+public static class SeedService
 {
-    private readonly IMultiTenantStore<MongoTenantInfo> _store;
-    private readonly IConfiguration _config;
-
-    public ApplicationStartedService(IMultiTenantStore<MongoTenantInfo> store, IConfiguration config)
+    public static async Task Seed(WebApplication app)
     {
-        _store = store;
-        _config = config;
+        var config = app.Services.GetRequiredService<IConfiguration>();
+        using var scope = app.Services.CreateScope();
+
+        var store = scope.ServiceProvider.GetRequiredService<IMultiTenantStore<MongoTenantInfo>>();
+        await SetupStore(store);
+        await SetupDb(store, config);
     }
 
-    public async Task StartAsync(CancellationToken cancellationToken)
-    {
-        await SetupStore(_store);
-        await SetupDb(_store, _config);
-    }
-
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        // Execute code here that you want to run when the application stops
-        Console.WriteLine("Application is stopping.");
-
-        return Task.CompletedTask;
-    }
-
-    private async Task SetupStore(IMultiTenantStore<MongoTenantInfo> store)
+    private static async Task SetupStore(IMultiTenantStore<MongoTenantInfo> store)
     {
         if (store.GetAllAsync().Result.Any()) return;
 
@@ -53,7 +35,7 @@ public class ApplicationStartedService : IHostedService
         await store.TryAddAsync(new MongoTenantInfo { Id = "tenant-megacorp-g754dafg", Identifier = "megacorp", Name = "MegaCorp Inc" });
     }
 
-    private async Task SetupDb(IMultiTenantStore<MongoTenantInfo> store, IConfiguration config)
+    private static async Task SetupDb(IMultiTenantStore<MongoTenantInfo> store, IConfiguration config)
     {
         var ti = store.TryGetByIdentifierAsync("finbuckle").Result;
         if (ti.ConnectionString is null)

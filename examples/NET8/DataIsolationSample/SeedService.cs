@@ -1,59 +1,24 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-using System;
-using System.Linq;
-using System.Threading;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using DataIsolationSample.Data;
 using DataIsolationSample.Models;
 using Finbuckle.MultiTenant;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
 using MongoFramework;
 
-namespace DataIsolationSample;
+namespace MongoTenantStoreSample;
 
 /// <summary>
 /// Seed the database the multi-tenant store we'll need.
 /// When application has started
 /// </summary>
-public class ApplicationStartedService : IHostedService
+public static class SeedService
 {
-    private readonly IMultiTenantStore<MongoTenantInfo> _store;
-    private readonly IConfiguration _config;
-
-    public ApplicationStartedService(IMultiTenantStore<MongoTenantInfo> store, IConfiguration config)
+    public static async Task Seed()
     {
-        _store = store;
-        _config = config;
+        await SetupDb();
     }
-
-    public async Task StartAsync(CancellationToken cancellationToken)
-    {
-        await SetupStore(_store);
-        await SetupDb(_store, _config);
-    }
-
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        // Execute code here that you want to run when the application stops
-        Console.WriteLine("Application is stopping.");
-
-        return Task.CompletedTask;
-    }
-
-    private async Task SetupStore(IMultiTenantStore<MongoTenantInfo> store)
-    {
-        if (store.GetAllAsync().Result.Any()) return;
-
-        await store.TryAddAsync(new MongoTenantInfo { Id = "tenant-finbuckle-d043favoiaw", Identifier = "finbuckle", Name = "Finbuckle" });
-        await store.TryAddAsync(new MongoTenantInfo { Id = "tenant-initech-341ojadsfa", Identifier = "initech", Name = "Initech LLC", ConnectionString = "mongodb://localhost/samples-tenant-initech" });
-        await store.TryAddAsync(new MongoTenantInfo { Id = "tenant-megacorp-g754dafg", Identifier = "megacorp", Name = "MegaCorp Inc" });
-    }
-
-    private async Task SetupDb(IMultiTenantStore<MongoTenantInfo> store, IConfiguration config)
+    
+    private static async Task SetupDb()
     {
         var ti = new TenantInfo { Id = "tenant-finbuckle-d043favoiaw", ConnectionString = "mongodb://localhost/isolation-test", Identifier = "finbuckle" };
         var conn = new MongoPerTenantConnection(ti);

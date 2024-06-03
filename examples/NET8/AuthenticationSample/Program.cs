@@ -1,8 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using AuthenticationSample;
 using AuthenticationSample.Data;
 using Finbuckle.Utilities.AspNetCore;
@@ -39,10 +35,10 @@ services.AddMultiTenant<SampleTenantInfo>()
         .WithMongoFrameworkStore(builder.Configuration.GetConnectionString("TenantStoreConnection"))
         .WithPerTenantAuthentication();
 
-//NOTE: this service will be called by the runtime when application is actually started
-services.AddSingleton<IHostedService, ApplicationStartedService>();
-
 var app = builder.Build();
+
+await SeedService.Seed(app);
+
 if (app.Environment.IsDevelopment())
 {
     app.UseDeveloperExceptionPage();
@@ -63,8 +59,6 @@ app.UseMultiTenant();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapRazorPages();
-});
+app.MapRazorPages();
 
+app.Run();

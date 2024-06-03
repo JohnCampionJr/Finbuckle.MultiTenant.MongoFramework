@@ -44,18 +44,18 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataIsolationSample", "exam
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoTenantStoreSample", "examples\NET6\MongoTenantStoreSample\MongoTenantStoreSample.csproj", "{4E3D2992-1195-4AFF-B258-A3FBE85EE320}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET 7.0", ".NET 7.0", "{A5F851CB-B364-4EF6-8C0F-BE9AC268AF8A}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".NET 8.0", ".NET 8.0", "{A5F851CB-B364-4EF6-8C0F-BE9AC268AF8A}"
 	ProjectSection(SolutionItems) = preProject
-		examples\NET7\Directory.Build.props = examples\NET7\Directory.Build.props
+		examples\NET8\Directory.Build.props = examples\NET8\Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationSample", "examples\NET7\AuthenticationSample\AuthenticationSample.csproj", "{2291A189-2241-4A3B-A86A-58A86C98E3E9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationSample", "examples\NET8\AuthenticationSample\AuthenticationSample.csproj", "{2291A189-2241-4A3B-A86A-58A86C98E3E9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CombinedSample", "examples\NET7\CombinedSample\CombinedSample.csproj", "{B384B273-21B6-4060-A133-09E71C75B6C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CombinedSample", "examples\NET8\CombinedSample\CombinedSample.csproj", "{B384B273-21B6-4060-A133-09E71C75B6C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataIsolationSample", "examples\NET7\DataIsolationSample\DataIsolationSample.csproj", "{649724B7-D079-4389-959A-506755FFE8AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataIsolationSample", "examples\NET8\DataIsolationSample\DataIsolationSample.csproj", "{649724B7-D079-4389-959A-506755FFE8AF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoTenantStoreSample", "examples\NET7\MongoTenantStoreSample\MongoTenantStoreSample.csproj", "{173D0BF0-8F64-4703-9594-734557B3832E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MongoTenantStoreSample", "examples\NET8\MongoTenantStoreSample\MongoTenantStoreSample.csproj", "{173D0BF0-8F64-4703-9594-734557B3832E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

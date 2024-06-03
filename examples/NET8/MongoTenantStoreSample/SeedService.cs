@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Finbuckle.MultiTenant;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace MongoTenantStoreSample;
@@ -15,26 +17,14 @@ namespace MongoTenantStoreSample;
 /// Seed the database the multi-tenant store we'll need.
 /// When application has started
 /// </summary>
-public class ApplicationStartedService : IHostedService
+public static class SeedService
 {
-    private readonly IMultiTenantStore<MongoTenantInfo> _store;
-
-    public ApplicationStartedService(IMultiTenantStore<MongoTenantInfo> store)
+    public static async Task Seed(WebApplication app)
     {
-        _store = store;
-    }
+        using var scope = app.Services.CreateScope();
 
-    public async Task StartAsync(CancellationToken cancellationToken)
-    {
-        await SetupStore(_store);
-    }
-
-    public Task StopAsync(CancellationToken cancellationToken)
-    {
-        // Execute code here that you want to run when the application stops
-        Console.WriteLine("Application is stopping.");
-
-        return Task.CompletedTask;
+        var store = scope.ServiceProvider.GetRequiredService<IMultiTenantStore<MongoTenantInfo>>();
+        await SetupStore(store);
     }
 
     private static async Task SetupStore(IMultiTenantStore<MongoTenantInfo> store)
