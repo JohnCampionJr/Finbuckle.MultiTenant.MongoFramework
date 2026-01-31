@@ -1,37 +1,46 @@
 ﻿using System;
-using Finbuckle.MultiTenant;
+using Finbuckle.MultiTenant.Abstractions;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using MongoFramework.Infrastructure;
-using MongoFramework.Infrastructure.Diagnostics;
 using MongoFramework.Utilities;
 
 // ReSharper disable once CheckNamespace
 namespace MongoFramework;
 
 /// <summary>
+/// Interface for tenant info that includes a connection string for per-tenant database connections.
+/// </summary>
+public interface IHasConnectionString
+{
+    string? ConnectionString { get; }
+}
+
+/// <summary>
 /// A MongoDbConnection that accepts a TenantInfo and uses its connection string to create the Data Context
 /// </summary>
 public interface IMongoPerTenantConnection : IMongoDbConnection
 {
-    ITenantInfo TenantInfo { get; }
+    ITenantInfo? TenantInfo { get; }
 }
 
 public class MongoPerTenantConnection : MongoDbConnection, IMongoPerTenantConnection
 {
-    public ITenantInfo TenantInfo { get; }
+    public ITenantInfo? TenantInfo { get; }
 
-    public MongoPerTenantConnection(ITenantInfo ti, IOptions<MongoPerTenantConnectionOptions> options = null)
+    public MongoPerTenantConnection(ITenantInfo ti, IOptions<MongoPerTenantConnectionOptions>? options = null)
     {
         Check.NotNull(ti, nameof(ti));
         TenantInfo = ti;
-        if (IsMongoDbConnectionString(ti.ConnectionString))
+
+        var connectionString = (ti as IHasConnectionString)?.ConnectionString;
+
+        if (IsMongoDbConnectionString(connectionString))
         {
-            Url = new MongoUrl(ti.ConnectionString);
+            Url = new MongoUrl(connectionString);
         }
         else if (IsMongoDbConnectionString(options?.Value?.DefaultConnectionString))
         {
-            Url = new MongoUrl(options.Value.DefaultConnectionString);
+            Url = new MongoUrl(options!.Value.DefaultConnectionString!);
         }
         else
         {
@@ -39,12 +48,13 @@ public class MongoPerTenantConnection : MongoDbConnection, IMongoPerTenantConnec
         }
     }
 
-    private static bool IsMongoDbConnectionString(string value)
+    private static bool IsMongoDbConnectionString(string? value)
     {
         if (string.IsNullOrEmpty(value))
         {
             return false;
         }
-        return value.ToLowerInvariant().StartsWith("mongodb://") || value.ToLowerInvariant().StartsWith("mongodb+srv://");
+        return value.StartsWith("mongodb://", StringComparison.OrdinalIgnoreCase) ||
+               value.StartsWith("mongodb+srv://", StringComparison.OrdinalIgnoreCase);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Finbuckle.MultiTenant.Abstractions;
 using MongoFramework;
 using MongoFramework.Linq;
 
@@ -21,14 +22,14 @@ public class MongoTenantStore<TTenantInfo> : IMultiTenantStore<TTenantInfo>
         _context = context;
     }
 
-    public async Task<bool> TryAddAsync(TTenantInfo tenantInfo)
+    public async Task<bool> AddAsync(TTenantInfo tenantInfo)
     {
         _context.Set<TTenantInfo>().Add(tenantInfo);
         await _context.SaveChangesAsync();
         return true;
     }
 
-    public async Task<bool> TryUpdateAsync(TTenantInfo tenantInfo)
+    public async Task<bool> UpdateAsync(TTenantInfo tenantInfo)
     {
         var existing = await _context.Set<TTenantInfo>()
             .SingleOrDefaultAsync(ti => ti.Id == tenantInfo.Id);
@@ -38,16 +39,12 @@ public class MongoTenantStore<TTenantInfo> : IMultiTenantStore<TTenantInfo>
             return false;
         }
 
-        existing.Identifier = tenantInfo.Identifier;
-        existing.Name = tenantInfo.Name;
-        existing.ConnectionString = tenantInfo.ConnectionString;
-
-        _context.Set<TTenantInfo>().Update(existing);
+        _context.Set<TTenantInfo>().Update(tenantInfo);
         await _context.SaveChangesAsync();
         return true;
     }
 
-    public async Task<bool> TryRemoveAsync(string identifier)
+    public async Task<bool> RemoveAsync(string identifier)
     {
         var existing = await _context.Set<TTenantInfo>()
             .SingleOrDefaultAsync(ti => ti.Identifier == identifier);
@@ -62,7 +59,7 @@ public class MongoTenantStore<TTenantInfo> : IMultiTenantStore<TTenantInfo>
         return true;
     }
 
-    public async Task<TTenantInfo> TryGetByIdentifierAsync(string identifier)
+    public async Task<TTenantInfo?> GetByIdentifierAsync(string identifier)
     {
         var existing = await _context.Set<TTenantInfo>()
             .SingleOrDefaultAsync(ti => ti.Identifier == identifier);
@@ -70,7 +67,7 @@ public class MongoTenantStore<TTenantInfo> : IMultiTenantStore<TTenantInfo>
         return existing;
     }
 
-    public async Task<TTenantInfo> TryGetAsync(string id)
+    public async Task<TTenantInfo?> GetAsync(string id)
     {
         var existing = await _context.Set<TTenantInfo>()
             .SingleOrDefaultAsync(ti => ti.Id == id);
@@ -81,5 +78,10 @@ public class MongoTenantStore<TTenantInfo> : IMultiTenantStore<TTenantInfo>
     public async Task<IEnumerable<TTenantInfo>> GetAllAsync()
     {
         return await _context.Set<TTenantInfo>().ToListAsync();
+    }
+
+    public async Task<IEnumerable<TTenantInfo>> GetAllAsync(int take, int skip)
+    {
+        return await _context.Set<TTenantInfo>().AsQueryable().Skip(skip).Take(take).ToListAsync();
     }
 }

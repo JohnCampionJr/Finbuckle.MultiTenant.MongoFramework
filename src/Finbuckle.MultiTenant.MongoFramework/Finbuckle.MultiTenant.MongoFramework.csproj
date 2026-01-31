@@ -1,35 +1,21 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
-    <PackageTags>$(PackageBaseTags)</PackageTags>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <PackageId>jcamp.Finbuckle.MultiTenant.MongoFramework</PackageId>
+    <Version>3.0.0</Version>
     <AssemblyName>Finbuckle.MultiTenant.MongoFramework</AssemblyName>
     <Title>Finbuckle.MultiTenant.MongoFramework</Title>
     <Description>Finbuckle.MultiTenant integration with MongoFramework providing tenant store and data isolation</Description>
-    <PackageTags>$(PackageBaseTags)</PackageTags>
     <Authors>John Campion Jr</Authors>
+    <Copyright>Copyright © John Campion Jr</Copyright>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MongoFramework" Version="0.29.0" />
-
+    <PackageReference Include="jcamp.MongoFramework" Version="3.0.0" />
+    <PackageReference Include="Finbuckle.MultiTenant" Version="10.0.2" />
   </ItemGroup>
 
-  <Choose>
-    <When Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-      <ItemGroup>
-        <PackageReference Include="Finbuckle.MultiTenant" Version="6.12.0" />
-      </ItemGroup>
-    </When>
-    <When Condition=" '$(TargetFramework)' == 'netstandard2.1' ">
-      <ItemGroup>
-        <PackageReference Include="Finbuckle.MultiTenant" Version="6.12.0" />
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <PackageReference Include="Finbuckle.MultiTenant" Version="6.12.0" />
-      </ItemGroup>
-    </Otherwise>
-  </Choose>
 </Project>

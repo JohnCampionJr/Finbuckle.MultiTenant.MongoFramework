@@ -9,7 +9,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddMongoPerTenantConnection(
         this IServiceCollection serviceCollection,
-        Action<MongoPerTenantConnectionOptions> optionsAction = null,
+        Action<MongoPerTenantConnectionOptions>? optionsAction = null,
         ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
     {
         return AddMongoPerTenantConnection<IMongoPerTenantConnection, MongoPerTenantConnection>(serviceCollection, optionsAction, contextLifetime);
@@ -17,7 +17,7 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddMongoPerTenantConnection<TConnection>(
         this IServiceCollection serviceCollection,
-        Action<MongoPerTenantConnectionOptions> optionsAction = null,
+        Action<MongoPerTenantConnectionOptions>? optionsAction = null,
         ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
         where TConnection : IMongoPerTenantConnection
     {
@@ -26,17 +26,16 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddMongoPerTenantConnection<TConnectionService, TConnectionImplementation>(
         this IServiceCollection serviceCollection,
-        Action<MongoPerTenantConnectionOptions> optionsAction = null,
+        Action<MongoPerTenantConnectionOptions>? optionsAction = null,
         ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
         where TConnectionImplementation : IMongoPerTenantConnection, TConnectionService
     {
-
         Check.NotNull(serviceCollection, nameof(serviceCollection));
 
         if (optionsAction != null)
         {
             var options = new MongoPerTenantConnectionOptions();
-            optionsAction?.Invoke(options);
+            optionsAction.Invoke(options);
 
             serviceCollection.Configure<MongoPerTenantConnectionOptions>(o =>
             {
@@ -73,7 +72,6 @@ public static class ServiceCollectionExtensions
         ServiceLifetime contextLifetime = ServiceLifetime.Scoped)
         where TConnectionImplementation : IMongoPerTenantConnection, TConnectionService
     {
-
         Check.NotNull(serviceCollection, nameof(serviceCollection));
 
         if (!string.IsNullOrEmpty(defaultConnectionString))

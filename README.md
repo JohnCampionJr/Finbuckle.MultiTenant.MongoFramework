@@ -5,6 +5,9 @@
 # Finbuckle.MultiTenant.MongoFramework
 This is an integration of [MongoFramework](https://github.com/TurnerSoftware/MongoFramework) and [Finbuckle.MultiTenant](https://github.com/Finbuckle/Finbuckle.MultiTenant).
 
+## Versioning
+The version of this package is synced with [jcamp.MongoFramework](https://github.com/JohnCampionJr/MongoFramework) to indicate compatibility with the underlying MongoDB C# Driver version.
+
 ## Features
 
 Working samples are provided for all of the following.

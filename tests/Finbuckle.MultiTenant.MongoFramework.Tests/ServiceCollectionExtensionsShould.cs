@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Finbuckle.MultiTenant.Abstractions;
 using Finbuckle.MultiTenant.Stores;
 using Microsoft.Extensions.DependencyInjection;
 using MongoFramework;
@@ -16,7 +17,7 @@ namespace Finbuckle.MultiTenant.Tests
         {
             var services = new ServiceCollection();
             services.AddMongoPerTenantConnection<MongoPerTenantConnection>();
-            services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Identifier = "test", ConnectionString = "mongodb://tenant" });
+            services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Id = "test-id", Identifier = "test", ConnectionString = "mongodb://tenant" });
 
             var provider = services.BuildServiceProvider();
             using var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope();
@@ -30,7 +31,7 @@ namespace Finbuckle.MultiTenant.Tests
         {
             var services = new ServiceCollection();
             services.AddMongoPerTenantConnection<MongoPerTenantConnection>(o => { o.DefaultConnectionString = "mongodb://localhost"; });
-            services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Identifier = "test" });
+            services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Id = "test-id", Identifier = "test" });
 
             var provider = services.BuildServiceProvider();
             using var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope();
@@ -44,7 +45,7 @@ namespace Finbuckle.MultiTenant.Tests
         {
             var services = new ServiceCollection();
             services.AddMongoPerTenantConnection(o => { o.DefaultConnectionString = "mongodb://localhost"; });
-            services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Identifier = "test" });
+            services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Id = "test-id", Identifier = "test" });
 
             var provider = services.BuildServiceProvider();
             using var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope();
@@ -58,7 +59,7 @@ namespace Finbuckle.MultiTenant.Tests
         {
             var services = new ServiceCollection();
             services.AddMongoPerTenantConnection("mongodb://localhost");
-            services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Identifier = "test" });
+            services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Id = "test-id", Identifier = "test" });
 
             var provider = services.BuildServiceProvider();
             using var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope();
@@ -72,7 +73,7 @@ namespace Finbuckle.MultiTenant.Tests
         {
             var services = new ServiceCollection();
             services.AddMongoPerTenantConnection<MongoPerTenantConnection>("mongodb://localhost");
-            services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Identifier = "test" });
+            services.AddScoped<ITenantInfo, MongoTenantInfo>(s => new MongoTenantInfo { Id = "test-id", Identifier = "test" });
 
             var provider = services.BuildServiceProvider();
             using var scoped = provider.GetRequiredService<IServiceScopeFactory>().CreateScope();

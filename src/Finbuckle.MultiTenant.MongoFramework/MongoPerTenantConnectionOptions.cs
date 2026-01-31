@@ -5,6 +5,6 @@ namespace MongoFramework;
 
 public class MongoPerTenantConnectionOptions
 {
-    public string DefaultConnectionString { get; set; }
-    public IDiagnosticListener DiagnosticListener { get; set; }
+    public string? DefaultConnectionString { get; set; }
+    public IDiagnosticListener? DiagnosticListener { get; set; }
 }

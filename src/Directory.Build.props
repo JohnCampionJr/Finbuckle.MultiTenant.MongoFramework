@@ -2,34 +2,44 @@
 
   <PropertyGroup>
     <RootNamespace>Finbuckle.MultiTenant.MongoFramework</RootNamespace>
+    <Company>jcamp</Company>
+    <LangVersion>Latest</LangVersion>
 
-    <Company>Relate Technology</Company>
-
+    <!-- Package metadata -->
     <PackageId>$(AssemblyName)</PackageId>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <PackageProjectUrl>https://github.com/JohnCampionJr/Finbuckle.MultiTenant.MongoFramework</PackageProjectUrl>
-    <PackageBaseTags>mongodb;multitentat;mongoframework;finbuckle</PackageBaseTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/jcamp-code/Finbuckle.MultiTenant.MongoFramework</PackageProjectUrl>
+    <PackageBaseTags>mongodb;multi-tenant;multitenancy;finbuckle;mongoframework</PackageBaseTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
 
-    <RepositoryUrl>https://github.com/JohnCampionJr/Finbuckle.MultiTenant.MongoFramework.git</RepositoryUrl>
+    <!-- Repository -->
+    <RepositoryUrl>https://github.com/jcamp-code/Finbuckle.MultiTenant.MongoFramework.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryBranch>main</RepositoryBranch>
 
-    <!-- SourceLink Support -->
+    <!-- Symbols and debugging (embedded in DLL) -->
+    <DebugType>embedded</DebugType>
+
+    <!-- Source Link -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
-    <LangVersion>Latest</LangVersion>
+    <!-- Deterministic builds -->
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+
+    <!-- Documentation -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE" Pack="true" Visible="false" PackagePath=""/>
-    <None Include="..\..\README.md" Pack="true" Visible="false" PackagePath=""/>
+    <None Include="..\..\README.md" Pack="true" Visible="false" PackagePath="/"/>
   </ItemGroup>
 
 </Project>

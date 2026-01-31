@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Finbuckle.MultiTenant.Abstractions;
 using Finbuckle.MultiTenant.Stores;
 using MongoFramework;
 using Shouldly;
@@ -20,21 +21,21 @@ namespace Finbuckle.MultiTenant.Tests
 
         private static IMultiTenantStore<MongoTenantInfo> PopulateTestStore(IMultiTenantStore<MongoTenantInfo> store)
         {
-            _ = store.TryAddAsync(new MongoTenantInfo
+            _ = store.AddAsync(new MongoTenantInfo
             {
                 Id = "initech-id",
                 Identifier = "initech",
                 Name = "Initech",
                 ConnectionString = "connstring"
             }).Result;
-            _ = store.TryAddAsync(new MongoTenantInfo
+            _ = store.AddAsync(new MongoTenantInfo
             {
                 Id = "lol-id",
                 Identifier = "lol",
                 Name = "Lol, Inc.",
                 ConnectionString = "connstring2"
             }).Result;
-            _ = store.TryAddAsync(new MongoTenantInfo
+            _ = store.AddAsync(new MongoTenantInfo
             {
                 Id = "default-id",
                 Identifier = "default",
@@ -48,60 +49,60 @@ namespace Finbuckle.MultiTenant.Tests
         public void GetTenantInfoFromStoreById()
         {
             var store = MongoTenantStoreShould.CreateTestStore();
-            store.TryGetAsync("initech-id").Result.Identifier.ShouldBe("initech");
+            store.GetAsync("initech-id").Result!.Identifier.ShouldBe("initech");
         }
 
         [Fact]
         public void ReturnNullWhenGettingByIdIfTenantInfoNotFound()
         {
             var store = MongoTenantStoreShould.CreateTestStore();
-            store.TryGetAsync("fake123").Result.ShouldBeNull();
+            store.GetAsync("fake123").Result.ShouldBeNull();
         }
 
         [Fact]
         public void GetTenantInfoFromStoreByIdentifier()
         {
             var store = MongoTenantStoreShould.CreateTestStore();
-            store.TryGetByIdentifierAsync("initech").Result.Identifier.ShouldBe("initech");
+            store.GetByIdentifierAsync("initech").Result!.Identifier.ShouldBe("initech");
         }
 
         [Fact]
         public void ReturnNullWhenGettingByIdentifierIfTenantInfoNotFound()
         {
             var store = MongoTenantStoreShould.CreateTestStore();
-            store.TryGetByIdentifierAsync("fake123").Result.ShouldBeNull();
+            store.GetByIdentifierAsync("fake123").Result.ShouldBeNull();
         }
 
         [Fact]
         public void AddTenantInfoToStore()
         {
             var store = MongoTenantStoreShould.CreateTestStore();
-            store.TryGetByIdentifierAsync("identifier").Result.ShouldBeNull();
-            store.TryAddAsync(new MongoTenantInfo { Id = "id", Identifier = "identifier", Name = "name", ConnectionString = "cs" }).Result.ShouldBeTrue();
-            store.TryGetByIdentifierAsync("identifier").Result.ShouldNotBeNull();
+            store.GetByIdentifierAsync("identifier").Result.ShouldBeNull();
+            store.AddAsync(new MongoTenantInfo { Id = "id", Identifier = "identifier", Name = "name", ConnectionString = "cs" }).Result.ShouldBeTrue();
+            store.GetByIdentifierAsync("identifier").Result.ShouldNotBeNull();
         }
 
         [Fact]
         public void RemoveTenantInfoFromStore()
         {
             var store = MongoTenantStoreShould.CreateTestStore();
-            store.TryGetByIdentifierAsync("initech").Result.ShouldNotBeNull();
-            store.TryRemoveAsync("initech").Result.ShouldBeTrue();
-            store.TryGetByIdentifierAsync("initech").Result.ShouldBeNull();
+            store.GetByIdentifierAsync("initech").Result.ShouldNotBeNull();
+            store.RemoveAsync("initech").Result.ShouldBeTrue();
+            store.GetByIdentifierAsync("initech").Result.ShouldBeNull();
         }
 
         [Fact]
         public void ReturnNullWhenRemovingIfTenantInfoNotFound()
         {
             var store = MongoTenantStoreShould.CreateTestStore();
-            store.TryRemoveAsync("fake123").Result.ShouldBeFalse();
+            store.RemoveAsync("fake123").Result.ShouldBeFalse();
         }
 
         [Fact]
         public void UpdateTenantInfoInStore()
         {
             var store = MongoTenantStoreShould.CreateTestStore();
-            var result = store.TryUpdateAsync(new MongoTenantInfo { Id = "initech-id", Identifier = "initech2", Name = "Initech2", ConnectionString = "connstring2" }).Result;
+            var result = store.UpdateAsync(new MongoTenantInfo { Id = "initech-id", Identifier = "initech2", Name = "Initech2", ConnectionString = "connstring2" }).Result;
             result.ShouldBeTrue();
         }
 
@@ -111,7 +112,7 @@ namespace Finbuckle.MultiTenant.Tests
             var store = MongoTenantStoreShould.CreateTestStore();
             var fakeTenant = new MongoTenantInfo { Id = "fake-id", Identifier = "fake" };
 
-            store.TryUpdateAsync(fakeTenant).Result.ShouldBeFalse();
+            store.UpdateAsync(fakeTenant).Result.ShouldBeFalse();
         }
 
         [Fact]

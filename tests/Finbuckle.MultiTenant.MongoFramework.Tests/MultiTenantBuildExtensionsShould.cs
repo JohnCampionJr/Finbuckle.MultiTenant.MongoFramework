@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Finbuckle.MultiTenant.Abstractions;
 using Finbuckle.MultiTenant.Stores;
 using Microsoft.Extensions.DependencyInjection;
 using MongoFramework;
@@ -18,7 +19,7 @@ namespace Finbuckle.MultiTenant.Tests
             services.AddTransient<IMongoTenantStoreConnection>(s => new MongoTenantStoreConnection("mongodb://localhost"));
             services.AddTransient<IMongoTenantStoreContext, MongoTenantStoreContext>();
 
-            var builder = new FinbuckleMultiTenantBuilder<MongoTenantInfo>(services);
+            var builder = new MultiTenantBuilder<MongoTenantInfo>(services);
             builder.WithMongoFrameworkStore();
 
             var provider = services.BuildServiceProvider();
@@ -34,7 +35,7 @@ namespace Finbuckle.MultiTenant.Tests
         {
             var services = new ServiceCollection();
 
-            var builder = new FinbuckleMultiTenantBuilder<MongoTenantInfo>(services);
+            var builder = new MultiTenantBuilder<MongoTenantInfo>(services);
             builder.WithMongoFrameworkStore("mongodb://localhost");
 
             var provider = services.BuildServiceProvider();

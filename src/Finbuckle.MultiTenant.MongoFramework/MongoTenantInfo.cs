@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using Finbuckle.MultiTenant.Abstractions;
 using MongoFramework;
 using MongoFramework.Attributes;
 
@@ -9,12 +10,12 @@ namespace Finbuckle.MultiTenant;
 /// This is an optional TenantInfo optimized for MongoDb, adding an index to the Identifier field.
 /// </summary>
 [Table("Tenants")]
-public class MongoTenantInfo : ITenantInfo
+public class MongoTenantInfo : ITenantInfo, IHasConnectionString
 {
-    public string Id { get; set; }
+    public string Id { get; set; } = null!;
 
     [Index("Identifier", IndexSortOrder.Ascending, IsUnique = true)]
-    public string Identifier { get; set; }
-    public string Name { get; set; }
-    public string ConnectionString { get; set; }
+    public string Identifier { get; set; } = null!;
+    public string? Name { get; set; }
+    public string? ConnectionString { get; set; }
 }

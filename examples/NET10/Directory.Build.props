@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <PropertyGroup>
+    <NoWarn>ASP0014</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Finbuckle.MultiTenant.AspNetCore" Version="10.0.2" />
+    <PackageReference Include="jcamp.MongoFramework.AspNetCore.Identity" Version="3.0.0" />
   </ItemGroup>
 
 </Project>

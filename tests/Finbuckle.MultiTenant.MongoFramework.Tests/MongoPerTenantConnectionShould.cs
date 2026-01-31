@@ -1,5 +1,5 @@
 ﻿using System;
-using Finbuckle.MultiTenant.Stores;
+using Finbuckle.MultiTenant;
 using MongoFramework;
 using Shouldly;
 using Xunit;
@@ -49,7 +49,7 @@ namespace Finbuckle.MultiTenant.Tests
         {
             Should.Throw<ArgumentNullException>(() =>
             {
-                _ = new MongoPerTenantConnection(null);
+                _ = new MongoPerTenantConnection(null!);
             });
         }
 
