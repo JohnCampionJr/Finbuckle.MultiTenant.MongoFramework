@@ -5,12 +5,6 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:
-    inputs:
-      mac:
-        description: 'Include the macOS leg (PAUSED by default — it bills at 10x)'
-        type: boolean
-        default: false
 
 env:
   # Disable the .NET logo in the console output.
@@ -28,13 +22,7 @@ jobs:
     runs-on: ${{matrix.os}}
     strategy:
       matrix:
-        # windows-2022 pinned deliberately: as of 2022-02-04, windows-latest >> windows-2019.
-        #
-        # macOS is PAUSED (2026-08-20) — it bills at 10x the linux rate, and this repo is on the
-        # personal account that hit its Actions spending limit. ubuntu + windows still cover the
-        # driver and the MongoDB setup. To include it for one run:
-        #   gh workflow run dotnet-multi-os-test.yml --ref <branch> -f mac=true
-        os: ${{ (github.event_name == 'workflow_dispatch' && inputs.mac) && fromJSON('["ubuntu-20.04", "macOS-latest", "windows-2022"]') || fromJSON('["ubuntu-20.04", "windows-2022"]') }}
+        os: [ubuntu-20.04, macOS-latest, windows-2022]  # As of 2022-02-04, windows-latest >> windows-2019
     steps:
     - name: Setup MongoDB
       uses: ankane/setup-mongodb@v1
